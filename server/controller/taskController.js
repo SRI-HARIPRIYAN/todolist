@@ -1,4 +1,4 @@
-import Task from "../model/taskModel/js";
+import Task from "../model/taskModel.js";
 
 const addTask = async (req, res) => {
 	const { title, description, dueDate, assignedTo } = req.body;
@@ -24,7 +24,7 @@ const addTask = async (req, res) => {
 };
 
 const deleteTask = async (req, res) => {
-	const { taskId } = req.params.id;
+	const { id: taskId } = req.params;
 	try {
 		const deletedTask = await Task.findByIdAndDelete(taskId);
 		if (!deletedTask) {
@@ -42,15 +42,31 @@ const deleteTask = async (req, res) => {
 
 const updateTask = async (req, res) => {
 	try {
-		const taskId = req.params.id;
+		const { id: taskId } = req.params;
 		const updates = req.body;
 		const updatedTask = await Task.findByIdAndUpdate(taskId, updates, {
 			new: true,
+			runValidators: true,
 		});
+		if (!updatedTask) {
+			return res.status(404).json({ message: "Task not found" });
+		}
+		res.status(201).json(updatedTask);
 	} catch (error) {
 		console.log("error in update task controller");
-		res.status(400).json({ error: error.message });
+		res.status(500).json({ error: error.message });
 	}
 };
 
-export { addTask, deleteTask, updateTask };
+const getTasks = async (req, res) => {
+	const userId = req.user.id;
+	try {
+		const tasks = await Task.find({ assignedTo: userId });
+		res.status(200).json(tasks);
+	} catch (error) {
+		console.log("error in get task controller");
+		res.status(500).json({ error: error.message });
+	}
+};
+
+export { addTask, deleteTask, updateTask, getTasks };

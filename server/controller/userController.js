@@ -15,7 +15,12 @@ const signup = async (req, res) => {
 		});
 		const response = await user.save();
 		generateTokenAndSetCookie(res, user._id);
-		res.status(201).json(response);
+		res.status(201).json({
+			_id: user._id,
+			userName: user.userName,
+			email: user.email,
+			teams: user.teams,
+		});
 	} catch (error) {
 		console.log("error in signup controller");
 		res.status(500).json({ error: error.message });
@@ -24,8 +29,8 @@ const signup = async (req, res) => {
 
 const login = async (req, res) => {
 	try {
-		const { email, password } = req.body;
-		let user = await User.findOne({ email });
+		const { userName, password } = req.body;
+		let user = await User.findOne({ userName });
 
 		if (user && (await user.comparePassword(password))) {
 			generateTokenAndSetCookie(res, user._id);
