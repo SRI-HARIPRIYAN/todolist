@@ -93,7 +93,7 @@ const getTeamTasks = async (req, res) => {
 };
 const getTaskSummary = async (req, res) => {
 	try {
-		const { id: userId } = req.params;
+		const { id: userId } = req.user;
 		let matchCriteria = { assignedTo: userId };
 
 		const totalTasks = await Task.countDocuments(matchCriteria);
@@ -109,6 +109,11 @@ const getTaskSummary = async (req, res) => {
 			...matchCriteria,
 			status: "inProgress",
 		});
+		const tasks = await Task.aggregate([
+			{ $match: { assignedTo: userId } },
+		]);
+
+		console.log("Matched tasks using aggregate:", tasks);
 
 		const taskByStatus = await Task.aggregate([
 			{ $match: matchCriteria },
