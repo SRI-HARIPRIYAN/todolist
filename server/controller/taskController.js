@@ -96,29 +96,22 @@ const getTaskSummary = async (req, res) => {
 		const { id: userId } = req.user;
 		let matchCriteria = { assignedTo: userId };
 
-		const totalTasks = await Task.countDocuments(matchCriteria);
-		const completedTasks = await Task.countDocuments({
-			...matchCriteria,
-			status: "completed",
-		});
-		const pendingTasks = await Task.countDocuments({
-			...matchCriteria,
-			status: "pending",
-		});
-		const inProgressTasks = await Task.countDocuments({
-			...matchCriteria,
-			status: "inProgress",
-		});
-		const tasks = await Task.aggregate([
-			{ $match: { assignedTo: userId } },
-		]);
+		const tasks = await Task.find(matchCriteria);
+		const totalTasks = tasks.length;
+		const completedTasks = tasks.filter(
+			(task) => task.status === "completed"
+		).length;
+		const pendingTasks = tasks.filter(
+			(task) => task.status === "pending"
+		).length;
+		const inProgressTasks = tasks.filter(
+			(task) => task.status === "inProgress"
+		).length;
 
-		console.log("Matched tasks using aggregate:", tasks);
-
-		const taskByStatus = await Task.aggregate([
-			{ $match: matchCriteria },
-			{ $group: { _id: "$status", count: { $sum: 1 } } },
-		]);
+		const taskByStatus = tasks.reduce((acc, task) => {
+			acc[task.status] = (acc[task.status] || 0) + 1;
+			return acc;
+		}, {});
 
 		const summary = {
 			totalTasks,
@@ -145,31 +138,32 @@ const getTeamTaskSummary = async (req, res) => {
 		const team = await Team.findById(teamId);
 		const teamMembers = team.members;
 
-		if (teamMembers.length === 0) {
-			return res.status(400).json({ message: "No team members found" });
-		}
 		const matchCriteria = {
 			createdBy: userId,
 			assignedTo: { $in: teamMembers },
 		};
 
-		const totalTeamTasks = await Task.countDocuments(matchCriteria);
-		const completedTasks = await Task.countDocuments({
-			...matchCriteria,
-			status: "completed",
-		});
-		const pendingTeamTasks = await Task.countDocuments({
-			...matchCriteria,
-			status: "pending",
-		});
-		const inProgressTeamTasks = await Task.countDocuments({
-			...matchCriteria,
-			status: "inProgress",
-		});
-		const teamTasksByStatus = await Task.aggregate([
-			{ $match: matchCriteria },
-			{ $group: { _id: "$status", count: { $sum: 1 } } },
-		]);
+		const tasks = await Task.find(matchCriteria);
+
+		const totalTeamTasks = tasks.length;
+		const completedTasks = tasks.filter(
+			(task) => task.status === "completed"
+		).length;
+		const pendingTeamTasks = tasks.filter(
+			(task) => task.status === "pending"
+		).length;
+		const inProgressTeamTasks = tasks.filter(
+			(task) => task.status === "inProgress"
+		).length;
+
+		const teamTasksByStatus = tasks.reduce((acc, task) => {
+			acc[task.status] = (acc[task.status] || 0) + 1;
+			return acc;
+		}, {});
+
+		if (teamMembers.length === 0) {
+			return res.status(400).json({ message: "No team members found" });
+		}
 
 		const summary = {
 			totalTeamTasks,
@@ -181,7 +175,7 @@ const getTeamTaskSummary = async (req, res) => {
 
 		res.status(200).json(summary);
 	} catch (error) {
-		console.log("error in get task controller");
+		console.log("error in get team task summary controller");
 		res.status(500).json({
 			success: false,
 			message: "Server error while generating task summary",
