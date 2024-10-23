@@ -4,6 +4,7 @@ import "./App.css";
 import LoginScreen from "./pages/LoginScreen.jsx";
 import SignupScreen from "./pages/SignupScreen.jsx";
 import HomeScreen from "./pages/HomeScreen.jsx";
+import TaskDashboard from "./pages/TaskDashboard.jsx";
 
 const App = () => {
 	return (
@@ -11,6 +12,7 @@ const App = () => {
 			<Route path="/" element={<HomeScreen />} />
 			<Route path="/login" element={<LoginScreen />} />
 			<Route path="/signup" element={<SignupScreen />} />
+			<Route path="/dashboard" element={<TaskDashboard />} />
 			<Route path="*" element={<Navigate to="/" />} />
 		</Routes>
 	);

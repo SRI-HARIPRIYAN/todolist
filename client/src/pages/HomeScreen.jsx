@@ -13,15 +13,15 @@ const HomeScreen = () => {
 				backgroundPosition: "center",
 			}}
 		>
-			<div className=" backdrop-blur-md  border-sky-200 p-2 border-opacity-60 text-center flex flex-col items-center">
-				<img src={taskImage} className="w-2/3" alt="" />
+			<div className=" backdrop-blur-md  border-sky-200 px-4 py-10 border-opacity-60 text-center flex flex-col items-center">
+				{/* <img src={taskImage} className="w-2/3" alt="" /> */}
 				<p className=" text-2xl sm:text-4xl text-purple-800 font-bold">
 					The Most Precious Time is{" "}
 					<span className="text-black">NOW</span>
 				</p>
 				<p className=" indent-6">Do it now or regret it later</p>
 				<Link
-					to={"/login"}
+					to={"/dashboard"}
 					className="bg-blue-300 p-2 hover:bg-blue-500"
 				>
 					Get started
