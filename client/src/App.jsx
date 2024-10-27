@@ -5,6 +5,7 @@ import LoginScreen from "./pages/LoginScreen.jsx";
 import SignupScreen from "./pages/SignupScreen.jsx";
 import HomeScreen from "./pages/HomeScreen.jsx";
 import TaskDashboard from "./pages/TaskDashboard.jsx";
+import TeamHomeScreen from "./pages/TeamHomeScreen.jsx";
 
 const App = () => {
 	return (
@@ -13,6 +14,7 @@ const App = () => {
 			<Route path="/login" element={<LoginScreen />} />
 			<Route path="/signup" element={<SignupScreen />} />
 			<Route path="/dashboard" element={<TaskDashboard />} />
+			<Route path="/myteam" element={<TeamHomeScreen />} />
 			<Route path="*" element={<Navigate to="/" />} />
 		</Routes>
 	);

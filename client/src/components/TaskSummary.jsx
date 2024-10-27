@@ -7,30 +7,42 @@ const TaskSummary = () => {
 	return (
 		<div className="flex flex-col gap-3 p-5">
 			<h2 className="bg-white p-2 ">Task Dashboard</h2>
-			<ul className="flex gap-3">
-				<li className=" bg-white h-14 flex items-center w-[150px] text-sm font-semibold p-2 rounded-lg">
+			<ul className="flex flex-col sm:flex-row gap-3 ">
+				<li className=" bg-white h-14 flex items-center w-3/4 sm:w-[150px] text-sm font-semibold p-2 rounded-lg">
 					<div className=" bg-blue-500 p-2 rounded-full mr-2">
 						<FaRegListAlt className="  bg-transparent text-white text-xl" />
 					</div>
-					All tasks
+					<div className="flex sm:flex-col w-full">
+						<p>All tasks</p>
+						<span className="block font-normal ml-auto ">10</span>
+					</div>
 				</li>
-				<li className=" bg-white h-14 flex items-center w-[150px] text-sm font-semibold p-2 rounded-lg">
+				<li className=" bg-white h-14 flex items-center w-3/4 sm:w-[150px] text-sm font-semibold p-2 rounded-lg">
 					<div className=" bg-sky-500 p-2 rounded-full mr-2">
 						<FaPenSquare className="  bg-transparent text-white text-xl" />
 					</div>
-					Incomplete
+					<div className="flex sm:flex-col w-full">
+						<p>Incomplete</p>
+						<span className="block font-normal ml-auto ">10</span>
+					</div>
 				</li>
-				<li className=" bg-white h-14 flex items-center w-[150px] text-sm font-semibold p-2 rounded-lg">
+				<li className=" bg-white h-14 flex items-center w-3/4 sm:w-[150px] text-sm font-semibold p-2 rounded-lg">
 					<div className=" bg-yellow-500 p-2 rounded-full mr-2">
 						<RiProgress6Line className="  bg-transparent text-white text-xl" />
 					</div>
-					Inprogress
+					<div className="flex sm:flex-col w-full">
+						<p>Inprogress</p>
+						<span className="block font-normal ml-auto ">10</span>
+					</div>
 				</li>
-				<li className=" bg-white h-14 flex items-center w-[150px] text-sm font-semibold p-2 rounded-lg">
+				<li className=" bg-white h-14 flex items-center w-3/4 sm:w-[150px] text-sm font-semibold p-2 rounded-lg">
 					<div className=" bg-green-500 p-2 rounded-full mr-2">
 						<IoCheckmarkDoneCircle className="  bg-transparent text-white text-xl" />
 					</div>
-					Completed
+					<div className="flex sm:flex-col w-full">
+						<p>Completed</p>
+						<span className="block font-normal ml-auto ">10</span>
+					</div>
 				</li>
 			</ul>
 		</div>

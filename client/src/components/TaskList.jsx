@@ -4,50 +4,47 @@ import TaskTable from "./TaskTable";
 const TaskList = () => {
 	const [selectedOption, setSelectedOption] = useState("allTasks");
 	return (
-		<div className="">
-			<nav className="flex justify-start border-2  bg-white ">
+		<div className="p-2 sm:p-5 ">
+			<h2 className="bg-white p-2 ">Task Dashboard</h2>
+			<nav className="flex justify-start  overflow-x-clip text-xs sm:text-sm  bg-slate-100 mt-4 ">
 				<button
 					onClick={() => setSelectedOption("allTasks")}
-					className={` border-r-2 p-2 hover:bg-sky-100 hover:font-semibold ${
+					className={`border-t-4 border-opacity-0 p-2 sm:px-6 md:px-10 ${
 						selectedOption === "allTasks"
-							? "bg-sky-200 font-semibold"
-							: ""
+							? "bg-white font-semibold  border-t-sky-600 border-opacity-100"
+							: " border-t-transparent"
 					} `}
 				>
-					{" "}
 					All tasks
 				</button>
 				<button
 					onClick={() => setSelectedOption("inComplete")}
-					className={` border-r-2 p-2 hover:bg-sky-100 hover:font-semibold ${
-						selectedOption === "incomplete"
-							? "bg-sky-200 font-semibold"
-							: ""
+					className={` border-t-4 border-opacity-0 p-2 sm:px-6 md:px-10  ${
+						selectedOption === "inComplete"
+							? "bg-white border-t-sky-600 border-opacity-100 font-semibold"
+							: "border-t-transparent"
 					} `}
 				>
-					{" "}
 					Incomplete
 				</button>
 				<button
 					onClick={() => setSelectedOption("inProgress")}
-					className={` border-r-2 p-2 hover:bg-sky-100 hover:font-semibold ${
+					className={` border-t-4 border-opacity-0 p-2 sm:px-6 md:px-10  ${
 						selectedOption === "inProgress"
-							? "bg-sky-200 font-semibold"
-							: ""
+							? "bg-white border-t-sky-600 border-opacity-100 font-semibold"
+							: "border-t-transparent"
 					} `}
 				>
-					{" "}
 					In progress
 				</button>
 				<button
 					onClick={() => setSelectedOption("completed")}
-					className={` border-r-2 p-2 hover:bg-sky-100 hover:font-semibold ${
+					className={` border-t-4 border-opacity-0 p-2 sm:px-6 md:px-10  ${
 						selectedOption === "completed"
-							? "bg-sky-200 font-semibold"
-							: ""
+							? "bg-white border-t-sky-600 border-opacity-100 font-semibold"
+							: "border-t-transparent"
 					} `}
 				>
-					{" "}
 					Completed
 				</button>
 			</nav>
