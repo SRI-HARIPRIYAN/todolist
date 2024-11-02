@@ -1,7 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import Homescreen from "../assets/Homescreen.png";
-import taskImage from "../assets/taskhand.png";
 const HomeScreen = () => {
 	return (
 		<div

@@ -1,10 +1,13 @@
 import React from "react";
 import { MdElectricBolt } from "react-icons/md";
 import { MdOutlinePerson } from "react-icons/md";
-const Header = () => {
+const Header = ({ setIsOpen }) => {
 	return (
 		<div className="h-10 bg-sky-600 flex items-center px-2 ">
-			<button className=" flex flex-col gap-0.5 justify-center items-center p-3 h-full w-10">
+			<button
+				onClick={() => setIsOpen((prev) => !prev)}
+				className=" flex flex-col gap-0.5 justify-center items-center p-3 h-full w-10"
+			>
 				<div className=" bg-white w-full h-[3px] rounded-sm"></div>
 				<div className=" bg-white w-full h-[3px] rounded-sm"></div>
 				<div className=" bg-white w-full h-[3px] rounded-sm"></div>

@@ -1,7 +1,7 @@
 import React from "react";
 import { HiArrowSmLeft } from "react-icons/hi";
 import { MdGroups } from "react-icons/md";
-const TeamList = ({ setSelectedTeam, isAsideClicked, setIsAsideClicked }) => {
+const TeamNavbar = ({ setSelectedTeam, isAsideClicked, setIsAsideClicked }) => {
 	console.log(isAsideClicked);
 	const teams = [
 		{ _id: 3433433, name: "dev" },
@@ -9,9 +9,9 @@ const TeamList = ({ setSelectedTeam, isAsideClicked, setIsAsideClicked }) => {
 	];
 	return (
 		<nav
-			className={` absolute md:relative ${
+			className={` absolute md:relative  ${
 				isAsideClicked ? "left-0" : "left-[-1000px]"
-			} md:left-0 duration-300 ease-in-out top-0  w-[40%] md:w-1/6 z-10 bg-white text-sm  `}
+			} md:left-0 duration-300 ease-in-out top-0  w-[40%] md:w-1/6 z-10 bg-slate-100 text-sm h-screen `}
 		>
 			<button
 				className="w-full text-center h-10 bg-sky-500 md:hidden"
@@ -19,6 +19,7 @@ const TeamList = ({ setSelectedTeam, isAsideClicked, setIsAsideClicked }) => {
 			>
 				<HiArrowSmLeft className="inline text-2xl text-white" />
 			</button>
+
 			<h2 className=" text-black text-center font-semibold bg-slate-300 p-2  h-10">
 				<MdGroups className="inline text-xl mr-2" />
 				My teams
@@ -39,4 +40,4 @@ const TeamList = ({ setSelectedTeam, isAsideClicked, setIsAsideClicked }) => {
 	);
 };
 
-export default TeamList;
+export default TeamNavbar;

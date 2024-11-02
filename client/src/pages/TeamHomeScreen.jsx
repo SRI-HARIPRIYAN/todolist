@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import TeamList from "../components/teams/TeamList";
+import TeamNavbar from "../components/teams/TeamNavbar";
 import TeamHeader from "../components/teams/TeamHeader";
 import TeamContainer from "../components/teams/TeamContainer";
 const TeamHomeScreen = () => {
@@ -11,7 +11,7 @@ const TeamHomeScreen = () => {
 			<TeamHeader setIsAsideClicked={setIsAsideClicked} />
 
 			<section className=" sm:flex md:flex-1">
-				<TeamList
+				<TeamNavbar
 					setSelectedTeam={setSelectedTeam}
 					isAsideClicked={isAsideClicked}
 					setIsAsideClicked={setIsAsideClicked}
