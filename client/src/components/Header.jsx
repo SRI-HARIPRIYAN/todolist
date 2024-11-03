@@ -1,9 +1,12 @@
-import React from "react";
+import React, { useState } from "react";
+import { Link } from "react-router-dom";
 import { MdElectricBolt } from "react-icons/md";
 import { MdOutlinePerson } from "react-icons/md";
+import NewTask from "./tasks/NewTask";
 const Header = ({ setIsOpen }) => {
+	const [openTask, setOpenTask] = useState(false);
 	return (
-		<div className="h-10 bg-sky-600 flex items-center px-2 ">
+		<div className=" h-10 bg-sky-600 flex items-center px-2 ">
 			<button
 				onClick={() => setIsOpen((prev) => !prev)}
 				className=" flex flex-col gap-0.5 justify-center items-center p-3 h-full w-10"
@@ -12,7 +15,10 @@ const Header = ({ setIsOpen }) => {
 				<div className=" bg-white w-full h-[3px] rounded-sm"></div>
 				<div className=" bg-white w-full h-[3px] rounded-sm"></div>
 			</button>
-			<button className="bg-sky-300 h-fit px-3 py-1 rounded-sm text-white font-bold text-sm">
+			<button
+				onClick={() => setOpenTask((prev) => !prev)}
+				className="bg-sky-300 h-fit px-3 py-1 rounded-sm text-white font-bold text-sm"
+			>
 				<MdElectricBolt className="text-white inline-block mr-1.5" />
 				New Task
 			</button>
@@ -22,6 +28,7 @@ const Header = ({ setIsOpen }) => {
 				</div>
 				<span>Hello User</span>
 			</div>
+			{openTask && <NewTask setOpenTask={setOpenTask} />}
 		</div>
 	);
 };
