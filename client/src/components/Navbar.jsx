@@ -7,10 +7,7 @@ import { MdOutlineEditNote } from "react-icons/md";
 import { TbReport } from "react-icons/tb";
 const Navbar = ({ isOpen, setIsOpen }) => {
 	console.log(isOpen);
-	const teams = [
-		{ _id: 3433433, name: "dev" },
-		{ _id: 4445354, name: "sales" },
-	];
+
 	return (
 		<section
 			className={` absolute md:relative ${
@@ -34,13 +31,13 @@ const Navbar = ({ isOpen, setIsOpen }) => {
 				</h2>
 				<ul className="flex flex-col h-screen font-normal text-white">
 					<li className=" px-2 py-4 cursor-pointer ">
-						<Link>
+						<Link to={"dashboard"}>
 							<MdSpaceDashboard className="inline mr-2 text-xl" />
 							Dashboard
 						</Link>
 					</li>
 					<li className=" px-2 py-4 cursor-pointer ">
-						<Link>
+						<Link to={"all"}>
 							<MdOutlineEditNote className="inline mr-2 text-xl" />
 							All tasks
 						</Link>

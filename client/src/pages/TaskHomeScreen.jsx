@@ -3,8 +3,9 @@ import Navbar from "../components/Navbar.jsx";
 import Header from "../components/Header.jsx";
 import TaskSummary from "../components/TaskSummary.jsx";
 import TaskList from "../components/TaskList.jsx";
+import { Outlet } from "react-router-dom";
 
-const TaskDashboard = () => {
+const TaskHomeScreen = () => {
 	const [isOpen, setIsOpen] = useState(true);
 	return (
 		<div className="w-screen h-screen relative bg-sky-100 ">
@@ -12,16 +13,12 @@ const TaskDashboard = () => {
 				<Navbar isOpen={isOpen} setIsOpen={setIsOpen} />
 				<section className=" flex-grow">
 					<Header setIsOpen={setIsOpen} />
-					<h1 className="font-bold p-2">
-						Task Management
-						<span className="opacity-25 text-sm">dashboard</span>
-					</h1>
-					<TaskSummary />
-					<TaskList />
+
+					<Outlet />
 				</section>
 			</div>
 		</div>
 	);
 };
 
-export default TaskDashboard;
+export default TaskHomeScreen;

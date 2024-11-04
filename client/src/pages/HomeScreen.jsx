@@ -20,7 +20,7 @@ const HomeScreen = () => {
 				</p>
 				<p className=" indent-6">Do it now or regret it later</p>
 				<Link
-					to={"/dashboard"}
+					to={"/tasks/dashboard"}
 					className="bg-blue-300 p-2 hover:bg-blue-500"
 				>
 					Get started

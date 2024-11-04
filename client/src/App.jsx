@@ -4,18 +4,22 @@ import "./App.css";
 import LoginScreen from "./pages/LoginScreen.jsx";
 import SignupScreen from "./pages/SignupScreen.jsx";
 import HomeScreen from "./pages/HomeScreen.jsx";
-import TaskDashboard from "./pages/TaskDashboard.jsx";
+import TaskHomeScreen from "./pages/TaskHomeScreen.jsx";
 import TeamHomeScreen from "./pages/TeamHomeScreen.jsx";
-import NewTask from "./components/tasks/NewTask.jsx";
+import TaskDashboard from "./components/tasks/TaskDashboard.jsx";
+import AllTasks from "./components/tasks/AllTasks.jsx";
 
 const App = () => {
 	return (
 		<Routes>
 			<Route path="/" element={<HomeScreen />} />
-			<Route path="/task/new" element={<NewTask />} />
+
 			<Route path="/login" element={<LoginScreen />} />
 			<Route path="/signup" element={<SignupScreen />} />
-			<Route path="/dashboard" element={<TaskDashboard />} />
+			<Route path="/tasks" element={<TaskHomeScreen />}>
+				<Route path="dashboard" element={<TaskDashboard />} />
+				<Route path="all" element={<AllTasks />} />
+			</Route>
 			<Route path="/myteam" element={<TeamHomeScreen />} />
 			<Route path="*" element={<Navigate to="/" />} />
 		</Routes>
