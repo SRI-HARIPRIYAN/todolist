@@ -10,8 +10,8 @@ const NewTask = ({ setOpenTask }) => {
 	});
 	console.log(taskData.status);
 	return (
-		<div className="w-screen h-screen  flex flex-col items-center justify-center bg-sky-500 text-white backdrop-blur-3xl">
-			<div className="relative text-black w-[300px] sm:w-[400px] rounded-md border-2 p-4 border-yellow-400 ">
+		<div className="w-screen h-screen absolute  top-0 flex flex-col items-center justify-center bg-sky-500 bg-opacity-25 text-white backdrop-blur-3xl z-60">
+			<div className="relative text-black w-[300px] sm:w-[400px] rounded-md border-2 p-4 border-yellow-400 bg-sky-300">
 				<h2 className="font-bold text-black text-center">New Task</h2>
 				<button
 					onClick={() => setOpenTask((prev) => !prev)}

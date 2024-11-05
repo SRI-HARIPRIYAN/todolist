@@ -49,7 +49,7 @@ const Navbar = ({ isOpen, setIsOpen }) => {
 						</Link>
 					</li>
 					<li className=" px-2 py-4 cursor-pointer  ">
-						<Link>
+						<Link to="summary">
 							<TbReport className="inline- mr-2 text-xl" />
 							Monthly report
 						</Link>

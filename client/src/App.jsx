@@ -8,6 +8,7 @@ import TaskHomeScreen from "./pages/TaskHomeScreen.jsx";
 import TeamHomeScreen from "./pages/TeamHomeScreen.jsx";
 import TaskDashboard from "./components/tasks/TaskDashboard.jsx";
 import AllTasks from "./components/tasks/AllTasks.jsx";
+import TaskReport from "./components/report/TaskReport.jsx";
 
 const App = () => {
 	return (
@@ -19,6 +20,7 @@ const App = () => {
 			<Route path="/tasks" element={<TaskHomeScreen />}>
 				<Route path="dashboard" element={<TaskDashboard />} />
 				<Route path="all" element={<AllTasks />} />
+				<Route path="summary" element={<TaskReport />} />
 			</Route>
 			<Route path="/myteam" element={<TeamHomeScreen />} />
 			<Route path="*" element={<Navigate to="/" />} />

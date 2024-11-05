@@ -6,7 +6,7 @@ import TaskList from "../components/TaskList.jsx";
 import { Outlet } from "react-router-dom";
 
 const TaskHomeScreen = () => {
-	const [isOpen, setIsOpen] = useState(true);
+	const [isOpen, setIsOpen] = useState(false);
 	return (
 		<div className="w-screen h-screen relative bg-sky-100 ">
 			<div className=" flex">

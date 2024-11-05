@@ -8,12 +8,14 @@ const TaskTable = ({ selectedOption }) => {
 		<div className="bg-white pt-6 md:w-2/3">
 			<table className=" w-full text-sm  bg-white text-center">
 				<thead className="font-normal text-sm py-2 border-collapse">
-					<th className=" border-2 ">
-						<TiTick className="inline text-lg" />
-					</th>
-					<th className=" border-2">Title</th>
-					<th className=" border-2">Description</th>
-					<th className=" border-2">Due</th>
+					<tr>
+						<th className=" border-2 ">
+							<TiTick className="inline text-lg" />
+						</th>
+						<th className=" border-2">Title</th>
+						<th className=" border-2">Description</th>
+						<th className=" border-2">Due</th>
+					</tr>
 				</thead>
 				<tbody>
 					<tr>

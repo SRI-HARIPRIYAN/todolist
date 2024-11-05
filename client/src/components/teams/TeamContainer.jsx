@@ -13,7 +13,10 @@ const TeamContainer = ({ teamId }) => {
 	const [addNewTask, setAddNewTask] = useState(false);
 	return (
 		<div className="flex flex-col flex-1 p-2 gap-2 bg-sky-50">
-			<Link to="/dashboard" className=" text-sm font-bold opacity-55">
+			<Link
+				to="/tasks/dashboard"
+				className=" text-sm font-bold opacity-55"
+			>
 				{"> "}Dashboard
 			</Link>
 			<h2 className="font-semibold text-sm sm:text-md opacity-80 bg-white p-1">
