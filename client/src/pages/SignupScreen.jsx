@@ -6,6 +6,13 @@ const SignupScreen = () => {
 	const [email, setEmail] = useState("");
 
 	const handleSubmit = () => {};
+	const handleGoogleAuth = () => {
+		try {
+			window.location.href = "http://localhost:5000/auth/google/callback";
+		} catch (error) {
+			console.log(error?.message);
+		}
+	};
 	return (
 		<div
 			className={` w-screen h-screen  grid grid-cols-1 sm:grid-cols-2`}
@@ -47,7 +54,10 @@ const SignupScreen = () => {
 					</button>
 				</form>
 				<p>or</p>
-				<button className="border-2 border-blue-500 px-3 py-2 bg-blue-300 hover:bg-blue-700">
+				<button
+					onClick={handleGoogleAuth}
+					className="border-2 border-blue-500 px-3 py-2 bg-blue-300 hover:bg-blue-700"
+				>
 					Signup with google
 				</button>
 			</section>
