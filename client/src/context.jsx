@@ -1,4 +1,4 @@
-import { createContext, useEffect, useState } from "react";
+import { createContext, useContext, useEffect, useState } from "react";
 
 export const UserContext = createContext();
 
@@ -37,3 +37,5 @@ export const UserProvider = ({ children }) => {
 		</UserContext.Provider>
 	);
 };
+
+export const useUserContext = () => useContext(UserContext);

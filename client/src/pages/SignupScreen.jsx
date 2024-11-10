@@ -1,11 +1,21 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import loginImage from "../assets/loginscreen.jpg";
+import useSignUpHook from "../hooks/user/useSignUpHook";
 const SignupScreen = () => {
 	const [userName, setUserName] = useState("");
 	const [password, setPassword] = useState("");
 	const [email, setEmail] = useState("");
 
-	const handleSubmit = () => {};
+	const navigate = useNavigate();
+	const { signUp } = useSignUpHook();
+
+	const handleSubmit = async (e) => {
+		e.preventDefault();
+		await signUp(userName, email, password);
+		navigate("/tasks/dashboard");
+	};
+
 	const handleGoogleAuth = () => {
 		try {
 			window.location.href = "http://localhost:5000/auth/google/callback";
@@ -13,6 +23,7 @@ const SignupScreen = () => {
 			console.log(error?.message);
 		}
 	};
+
 	return (
 		<div
 			className={` w-screen h-screen  grid grid-cols-1 sm:grid-cols-2`}
@@ -49,7 +60,10 @@ const SignupScreen = () => {
 						value={password}
 						onChange={(e) => setPassword(e.target.value)}
 					/>
-					<button className=" bg-blue-300 text-white hover:bg-blue-500">
+					<button
+						onClick={handleSubmit}
+						className=" bg-blue-300 text-white hover:bg-blue-500"
+					>
 						Signup
 					</button>
 				</form>

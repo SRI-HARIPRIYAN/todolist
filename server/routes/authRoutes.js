@@ -2,7 +2,7 @@ import express from "express";
 import passport from "passport";
 import axios from "axios";
 import User from "../model/userModel.js";
-import { generateTokenAndSetCookie } from "../utils/generateToken.js";
+import generateTokenAndSetCookie from "../utils/generateToken.js";
 import dotenv from "dotenv";
 dotenv.config();
 const router = express.Router();

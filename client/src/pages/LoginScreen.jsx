@@ -1,14 +1,21 @@
 import React, { useState } from "react";
 import loginImage from "../assets/loginscreen.jpg";
+import useLoginHook from "../hooks/user/useLoginHook";
 const LoginScreen = () => {
 	const [userName, setUserName] = useState("");
 	const [password, setPassword] = useState("");
+	const { login } = useLoginHook();
 	const handleGoogleAuth = () => {
 		try {
 			window.location.href = "http://localhost:5000/auth/google/callback";
 		} catch (error) {
 			console.log(error?.message);
 		}
+	};
+	const handleLogin = async (e) => {
+		e.preventDefault();
+		await login(userName, password);
+		console.log("login called");
 	};
 	return (
 		<div
@@ -38,7 +45,10 @@ const LoginScreen = () => {
 						value={password}
 						onChange={(e) => setPassword(e.target.value)}
 					/>
-					<button className=" bg-blue-300 text-white hover:bg-blue-500">
+					<button
+						onClick={handleLogin}
+						className=" bg-blue-300 text-white hover:bg-blue-500"
+					>
 						login
 					</button>
 				</form>

@@ -1,26 +1,29 @@
 import User from "../model/userModel.js";
-import { generateTokenAndSetCookie } from "../utils/generateToken.js";
+import generateTokenAndSetCookie from "../utils/generateToken.js";
 
 const signup = async (req, res) => {
 	try {
 		const { userName, email, password } = req.body;
-		let user = await User.findOne({ $or: [{ userName }, { email }] });
-		if (user) {
+		const userExists = await User.findOne({ email });
+		if (userExists) {
 			return res.status(400).json({ message: "User already exist" });
 		}
-		user = new User({
+		const user = await User.create({
 			userName,
 			email,
 			password,
 		});
-		const response = await user.save();
-		generateTokenAndSetCookie(res, user._id);
-		res.status(201).json({
-			_id: user._id,
-			userName: user.userName,
-			email: user.email,
-			teams: user.teams,
-		});
+		if (user) {
+			generateTokenAndSetCookie(res, user._id);
+			res.status(201).json({
+				_id: user._id,
+				userName: user.userName,
+				email: user.email,
+				teams: user.teams,
+			});
+		} else {
+			res.status(400).json({ error: "Invalid credentials" });
+		}
 	} catch (error) {
 		console.log("error in signup controller");
 		res.status(500).json({ error: error.message });
