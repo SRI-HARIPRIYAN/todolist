@@ -1,14 +1,23 @@
 import React, { useState } from "react";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
+import useCreateTaskHook from "../../hooks/task/useCreateTaskHook";
+import Spinner from "../Spinner";
 const NewTask = ({ setOpenTask }) => {
+	const { createTask, loading, error } = useCreateTaskHook();
 	const [taskData, setTaskData] = useState({
 		title: "",
 		description: "",
 		dueDate: new Date(),
 		status: "pending",
 	});
-	console.log(taskData.status);
+
+	const handleCreateTask = async (e) => {
+		e.preventDefault();
+		await createTask(taskData);
+		setOpenTask(false);
+	};
+
 	return (
 		<div className="w-screen h-screen absolute  top-0 flex flex-col items-center justify-center bg-sky-500 bg-opacity-25 text-white backdrop-blur-3xl z-60">
 			<div className="relative text-black w-[300px] sm:w-[400px] rounded-md border-2 p-4 border-yellow-400 bg-sky-300">
@@ -95,6 +104,7 @@ const NewTask = ({ setOpenTask }) => {
 						</p>
 					</div>
 					<button
+						onClick={handleCreateTask}
 						type="submit"
 						className="w-fit bg-green-400 mx-auto rounded-md px-2 py-1"
 					>
@@ -102,6 +112,7 @@ const NewTask = ({ setOpenTask }) => {
 					</button>
 				</form>
 			</div>
+			{loading && <Spinner />}
 		</div>
 	);
 };

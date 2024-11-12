@@ -1,10 +1,14 @@
 import React, { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import loginImage from "../assets/loginscreen.jpg";
 import useLoginHook from "../hooks/user/useLoginHook";
+import Spinner from "../components/Spinner";
+import { toast } from "react-toastify";
 const LoginScreen = () => {
 	const [userName, setUserName] = useState("");
 	const [password, setPassword] = useState("");
-	const { login } = useLoginHook();
+	const { login, loading } = useLoginHook();
+	const navigate = useNavigate();
 	const handleGoogleAuth = () => {
 		try {
 			window.location.href = "http://localhost:5000/auth/google/callback";
@@ -15,8 +19,10 @@ const LoginScreen = () => {
 	const handleLogin = async (e) => {
 		e.preventDefault();
 		await login(userName, password);
-		console.log("login called");
+		navigate("/tasks/dashboard");
+		toast.success("Logged in successfully");
 	};
+
 	return (
 		<div
 			className={` w-screen h-screen  grid grid-cols-1 sm:grid-cols-2`}
@@ -59,7 +65,15 @@ const LoginScreen = () => {
 				>
 					google
 				</button>
+				<p className="text-white text-sm ">New here?</p>
+				<Link
+					className=" inline text-blue-400 font-bold"
+					to={"/signup"}
+				>
+					Register
+				</Link>
 			</section>
+			{loading && <Spinner />}
 			<section
 				className="hidden sm:flex items-center justify-center border-2 "
 				style={{

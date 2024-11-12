@@ -1,19 +1,22 @@
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import loginImage from "../assets/loginscreen.jpg";
 import useSignUpHook from "../hooks/user/useSignUpHook";
+import Spinner from "../components/Spinner";
+import { toast } from "react-toastify";
 const SignupScreen = () => {
 	const [userName, setUserName] = useState("");
 	const [password, setPassword] = useState("");
 	const [email, setEmail] = useState("");
 
 	const navigate = useNavigate();
-	const { signUp } = useSignUpHook();
+	const { signUp, loading } = useSignUpHook();
 
 	const handleSubmit = async (e) => {
 		e.preventDefault();
 		await signUp(userName, email, password);
 		navigate("/tasks/dashboard");
+		toast.success("Signed in successfully");
 	};
 
 	const handleGoogleAuth = () => {
@@ -42,6 +45,7 @@ const SignupScreen = () => {
 						placeholder="Username "
 						className=" h-10 pl-2 rounded-md "
 						value={userName}
+						autoComplete="name"
 						onChange={(e) => setUserName(e.target.value)}
 					/>
 					<input
@@ -58,9 +62,11 @@ const SignupScreen = () => {
 						placeholder="Password"
 						className=" h-10 pl-2 rounded-md "
 						value={password}
+						autoComplete="your password"
 						onChange={(e) => setPassword(e.target.value)}
 					/>
 					<button
+						type="submit"
 						onClick={handleSubmit}
 						className=" bg-blue-300 text-white hover:bg-blue-500"
 					>
@@ -74,6 +80,11 @@ const SignupScreen = () => {
 				>
 					Signup with google
 				</button>
+				<p>Already an user?</p>
+				<Link className="inline text-white" to="/login">
+					Login
+				</Link>
+				{loading && <Spinner />}
 			</section>
 			<section
 				className="hidden sm:flex items-center justify-center border-2 "

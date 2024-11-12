@@ -4,18 +4,17 @@ const addTask = async (req, res) => {
 	const { title, description, dueDate, assignedTo } = req.body;
 	const userId = req.user._id;
 	try {
-		let task = await Task.findOne({ title, assignedTo });
-		if (task) {
-			return res.status(400).json({ message: "Task already assigned" });
+		const taskExists = await Task.findOne({ title, assignedTo });
+		if (taskExists) {
+			return res.status(400).json({ error: "Task already assigned" });
 		}
-		task = new Task({
+		const task = await Task.create({
 			title,
 			description,
 			dueDate,
 			assignedTo,
 			createdBy: userId,
 		});
-		await task.save();
 		res.status(201).json(task);
 	} catch (error) {
 		console.log("error in addTask controller");

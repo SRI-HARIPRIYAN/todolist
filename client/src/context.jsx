@@ -7,10 +7,10 @@ export const UserProvider = ({ children }) => {
 		() => JSON.parse(localStorage.getItem("user")) || null
 	);
 	const [userTeams, setUserTeams] = useState(
-		() => JSON.parse(localStorage.getItem("userTeams")) || null
+		() => JSON.parse(localStorage.getItem("userTeams")) || []
 	);
 	const [userTasks, setUserTasks] = useState(
-		() => JSON.parse(localStorage.getItem("userTasks")) || null
+		() => JSON.parse(localStorage.getItem("userTasks")) || []
 	);
 
 	useEffect(() => {
