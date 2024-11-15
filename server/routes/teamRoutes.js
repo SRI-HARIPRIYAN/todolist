@@ -1,7 +1,7 @@
 import express from "express";
 import protect from "../middleware/authMiddleware/protect.js";
 import {
-	getTeam,
+	getTeams,
 	addMemberToTeam,
 	removeMember,
 	createTeam,
@@ -10,7 +10,7 @@ import {
 
 const router = express.Router();
 
-router.route("/").get(protect, getTeam);
+router.route("/").get(protect, getTeams);
 router.route("/:id").delete(protect, deleteTeam);
 router.route("/new").post(protect, createTeam);
 router

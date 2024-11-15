@@ -2,37 +2,36 @@ import { useState } from "react";
 import { BACKEND_URL } from "../../constant.js";
 import { toast } from "react-toastify";
 import useGetUserTeamsHook from "./useGetUserTeamsHook.js";
-const useAddMemberHook = () => {
+const useRemoveMemberHook = () => {
 	const [loading, setLoading] = useState(false);
 	const [error, setError] = useState(null);
-	const { getTeams } = useGetUserTeamsHook();
-	const createTeam = async (teamId, members) => {
+	const { getUserTeams } = useGetUserTeamsHook();
+	const deleteMember = async (teamId, memberId) => {
 		setLoading(true);
 		try {
 			const response = await fetch(
 				`${BACKEND_URL}/teams/${teamId}/members`,
 				{
-					method: "POST",
-					headers: { "Content-Type": "application/json" },
-					body: JSON.stringify({ members }),
+					method: "DELETE",
+					credentials: "include",
+					body: JSON.stringify({ memberId }),
 				}
 			);
-			const data = await response.json();
 			if (!response.ok) {
-				throw new Error(data.error || "Unable to add member");
+				throw new Error(data.error || "Unable to remove member");
 			} else {
-				await getTeams();
-				toast.success("member added");
+				getUserTeams();
+				toast.success("User removed");
 			}
 		} catch (error) {
-			console.log("Error in add member: ", error);
+			console.log("Error in remove member hook: ", error);
 			setError(error);
 			toast.error(error.message);
 		} finally {
 			setLoading(false);
 		}
 	};
-	return { createTeam, loading, error };
+	return { deleteMember, loading, error };
 };
 
-export default useAddMemberHook;
+export default useRemoveMemberHook;

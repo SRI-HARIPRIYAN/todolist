@@ -97,7 +97,7 @@ const removeMember = async (req, res) => {
 	}
 };
 
-const getTeam = async (req, res) => {
+const getTeams = async (req, res) => {
 	const { id: userId } = req.user;
 	try {
 		const teams = await Team.find({ admin: userId }).populate(
@@ -127,4 +127,4 @@ const deleteTeam = async (req, res) => {
 		res.status(500).json({ error: error.message });
 	}
 };
-export { createTeam, addMemberToTeam, removeMember, getTeam, deleteTeam };
+export { createTeam, addMemberToTeam, removeMember, getTeams, deleteTeam };
