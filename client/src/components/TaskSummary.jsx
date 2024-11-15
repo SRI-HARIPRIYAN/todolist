@@ -1,9 +1,24 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { FaRegListAlt } from "react-icons/fa";
 import { FaPenSquare } from "react-icons/fa";
 import { RiProgress6Line } from "react-icons/ri";
 import { IoCheckmarkDoneCircle } from "react-icons/io5";
+import { useUserContext } from "../context";
 const TaskSummary = () => {
+	const { userTasks } = useUserContext();
+	let completed = 0;
+	let inProgress = 0;
+	let pending = 0;
+	let allTasks = userTasks.length;
+	useEffect(() => {
+		completed = userTasks.filter(
+			(task) => task.status === "completed"
+		).length;
+		pending = userTasks.filter((task) => task.status === "pending").length;
+		inProgress = userTasks.filter(
+			(task) => task.status === "inProgress"
+		).length;
+	}, [userTasks]);
 	return (
 		<div className="flex flex-col gap-3 ">
 			<h2 className="bg-white p-2 ">Task Dashboard</h2>
@@ -14,7 +29,9 @@ const TaskSummary = () => {
 					</div>
 					<div className="flex sm:flex-col w-full">
 						<p>All tasks</p>
-						<span className="block font-normal ml-auto ">10</span>
+						<span className="block font-normal ml-auto ">
+							{allTasks}
+						</span>
 					</div>
 				</li>
 				<li className=" bg-white h-14 flex items-center w-3/4 sm:w-[150px] text-sm font-semibold p-2 rounded-lg">
@@ -23,7 +40,9 @@ const TaskSummary = () => {
 					</div>
 					<div className="flex sm:flex-col w-full">
 						<p>Incomplete</p>
-						<span className="block font-normal ml-auto ">10</span>
+						<span className="block font-normal ml-auto ">
+							{pending}
+						</span>
 					</div>
 				</li>
 				<li className=" bg-white h-14 flex items-center w-3/4 sm:w-[150px] text-sm font-semibold p-2 rounded-lg">
@@ -32,7 +51,9 @@ const TaskSummary = () => {
 					</div>
 					<div className="flex sm:flex-col w-full">
 						<p>Inprogress</p>
-						<span className="block font-normal ml-auto ">10</span>
+						<span className="block font-normal ml-auto ">
+							{inProgress}
+						</span>
 					</div>
 				</li>
 				<li className=" bg-white h-14 flex items-center w-3/4 sm:w-[150px] text-sm font-semibold p-2 rounded-lg">
@@ -41,7 +62,9 @@ const TaskSummary = () => {
 					</div>
 					<div className="flex sm:flex-col w-full">
 						<p>Completed</p>
-						<span className="block font-normal ml-auto ">10</span>
+						<span className="block font-normal ml-auto ">
+							{completed}
+						</span>
 					</div>
 				</li>
 			</ul>

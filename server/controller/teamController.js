@@ -13,7 +13,6 @@ const createTeam = async (req, res) => {
 			teamName,
 			admin,
 		});
-
 		const response = await team.save();
 		user.teams.push(response._id);
 		await user.save();

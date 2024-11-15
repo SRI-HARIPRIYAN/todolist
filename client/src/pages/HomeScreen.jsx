@@ -2,26 +2,10 @@ import React from "react";
 import { Link } from "react-router-dom";
 import axios from "axios";
 import Homescreen from "../assets/Homescreen.png";
+import { useUserContext } from "../context";
 const HomeScreen = () => {
-	const getUser = async () => {
-		try {
-			const res = await axios.get(
-				`http://localhost:5000/auth/login/success`,
-				{
-					withCredentials: true,
-				}
-			);
-			console.log(res.data);
-			// need to set userdata on context {...res.data.user._json,_id:res.data._id}
-		} catch (error) {
-			console.log(error);
-		}
-	};
-	/* useEffect(() => {
-		try {
-			getUser();
-		} catch (error) {}
-	}, []); */
+	const { user } = useUserContext();
+
 	return (
 		<div
 			className="w-screen h-screen bg-no-repeat flex justify-center items-center flex-col px-3"
@@ -40,15 +24,21 @@ const HomeScreen = () => {
 				</p>
 				<p className=" indent-6">Do it now or regret it later</p>
 				<Link
-					to={"/signup"}
+					to={user ? "/tasks/dashboard" : "/login"}
 					className="bg-blue-300 p-2 hover:bg-blue-500"
 				>
 					Get started
 				</Link>
-				<div className="flex gap-2 justify-center">
-					<button className="bg-blue-300 p-2">Your Tasks</button>
-					<button className="bg-blue-300 p-2">Your Teams</button>
-				</div>
+				{user && (
+					<div className="flex gap-2 justify-center">
+						<Link to="/tasks/dashboard" className="bg-blue-300 p-2">
+							Your Tasks
+						</Link>
+						<Link to="/myteam" className="bg-blue-300 p-2">
+							Your Teams
+						</Link>
+					</div>
+				)}
 			</div>
 		</div>
 	);
