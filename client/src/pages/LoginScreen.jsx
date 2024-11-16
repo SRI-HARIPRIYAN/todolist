@@ -19,8 +19,6 @@ const LoginScreen = () => {
 	const handleLogin = async (e) => {
 		e.preventDefault();
 		await login(userName, password);
-		navigate("/tasks/dashboard");
-		toast.success("Logged in successfully");
 	};
 
 	return (

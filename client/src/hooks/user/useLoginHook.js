@@ -3,10 +3,11 @@ import { BACKEND_URL } from "../../constant.js";
 import { useUserContext } from "../../context.jsx";
 import { useState } from "react";
 import { toast } from "react-toastify";
-
+import { useNavigate } from "react-router-dom";
 const useLoginHook = () => {
 	const [loading, setLoading] = useState(false);
 	const { setUser } = useUserContext();
+	const navigate = useNavigate();
 	const login = async (userName, password) => {
 		try {
 			setLoading(true);
@@ -17,12 +18,15 @@ const useLoginHook = () => {
 				credentials: "include",
 			});
 			const data = await response.json();
+			if (data.error) {
+				throw new Error(data.error);
+			}
 			console.log("user data: ", data);
 			setUser(data);
-			setLoading(false);
+			navigate("/tasks/dashboard");
+			toast.success("Logged in successfully");
 		} catch (error) {
 			toast.error(error?.message || error);
-
 			console.log(error);
 		} finally {
 			setLoading(false);

@@ -6,8 +6,6 @@ import { MdSpaceDashboard } from "react-icons/md";
 import { MdOutlineEditNote } from "react-icons/md";
 import { TbReport } from "react-icons/tb";
 const Navbar = ({ isOpen, setIsOpen }) => {
-	console.log(isOpen);
-
 	return (
 		<section
 			className={` absolute md:relative ${

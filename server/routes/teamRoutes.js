@@ -6,12 +6,13 @@ import {
 	removeMember,
 	createTeam,
 	deleteTeam,
+	getTeam,
 } from "../controller/teamController.js";
 
 const router = express.Router();
 
 router.route("/").get(protect, getTeams);
-router.route("/:id").delete(protect, deleteTeam);
+router.route("/:id").get(protect, getTeam).delete(protect, deleteTeam);
 router.route("/new").post(protect, createTeam);
 router
 	.route("/:id/members")

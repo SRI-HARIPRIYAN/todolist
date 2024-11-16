@@ -1,17 +1,18 @@
 import { useState } from "react";
 import { BACKEND_URL } from "../../constant.js";
-import useUserContext from "../../context.jsx";
+import { useUserContext } from "../../context.jsx";
 import { toast } from "react-toastify";
 const useGetUserTeamsHook = () => {
 	const [loading, setLoading] = useState(false);
 	const [error, setError] = useState(null);
 	const { setUserTeams } = useUserContext();
-	const getTeams = async (team) => {
+	const getTeams = async () => {
 		setLoading(true);
 		try {
 			const response = await fetch(`${BACKEND_URL}/teams`, {
 				method: "GET",
 				headers: { "Content-Type": "application/json" },
+				credentials: "include",
 			});
 			const data = await response.json();
 			if (!response.ok) {

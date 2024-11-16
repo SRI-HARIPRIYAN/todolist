@@ -1,12 +1,11 @@
-import React from "react";
+import React, { useState } from "react";
 import { HiArrowSmLeft } from "react-icons/hi";
 import { MdGroups } from "react-icons/md";
+import CreateTeam from "./CreateTeam";
+import { useUserContext } from "../../context";
 const TeamNavbar = ({ setSelectedTeam, isAsideClicked, setIsAsideClicked }) => {
-	console.log(isAsideClicked);
-	const teams = [
-		{ _id: 3433433, name: "dev" },
-		{ _id: 4445354, name: "sales" },
-	];
+	const { userTeams } = useUserContext();
+	const [createTeam, setCreateTeam] = useState(false);
 	return (
 		<nav
 			className={` absolute md:relative  ${
@@ -26,16 +25,27 @@ const TeamNavbar = ({ setSelectedTeam, isAsideClicked, setIsAsideClicked }) => {
 			</h2>
 
 			<ul className="flex flex-col  font-semibold text-center">
-				{teams?.map((team) => (
+				{userTeams?.map((team) => (
 					<li
-						onClick={() => setSelectedTeam(team._id)}
+						onClick={() => {
+							setSelectedTeam(team._id);
+							setIsAsideClicked(false);
+						}}
 						className="bg-slate-100 p-2 border-b-2 cursor-pointer opacity-65"
 						key={team._id}
 					>
-						{team.name}
+						{team.teamName}
 					</li>
 				))}
 			</ul>
+			<button
+				onClick={() => setCreateTeam((prev) => !prev)}
+				className=" text-green-500 text-center font-semibold bg-slate-200 p-2 w-full h-10"
+			>
+				<MdGroups className="inline text-xl mr-2" />
+				Create
+			</button>
+			{createTeam && <CreateTeam setCreateTeam={setCreateTeam} />}
 		</nav>
 	);
 };

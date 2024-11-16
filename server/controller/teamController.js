@@ -127,4 +127,28 @@ const deleteTeam = async (req, res) => {
 		res.status(500).json({ error: error.message });
 	}
 };
-export { createTeam, addMemberToTeam, removeMember, getTeams, deleteTeam };
+
+const getTeam = async (req, res) => {
+	const { id: teamId } = req.params;
+	try {
+		const team = await Team.findById(teamId).populate(
+			"members",
+			"_id userName email" //no more whitespace after the strings like"_id userName email_"
+		);
+		if (!team) {
+			return res.status(404).json({ error: "Team not found" });
+		}
+		res.status(200).json(team);
+	} catch (error) {
+		console.log("Error in get team controller", error);
+		res.status(500).json({ error: error.message });
+	}
+};
+export {
+	createTeam,
+	addMemberToTeam,
+	removeMember,
+	getTeams,
+	deleteTeam,
+	getTeam,
+};

@@ -1,12 +1,16 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Navbar from "../components/Navbar.jsx";
 import Header from "../components/Header.jsx";
-import TaskSummary from "../components/TaskSummary.jsx";
-import TaskList from "../components/TaskList.jsx";
 import { Outlet } from "react-router-dom";
-
+import useGetTasksHook from "../hooks/task/useGetTasksHook.js";
+import Spinner from "../components/Spinner.jsx";
 const TaskHomeScreen = () => {
 	const [isOpen, setIsOpen] = useState(false);
+	const { getTasks, loading, error } = useGetTasksHook();
+	useEffect(() => {
+		getTasks();
+	}, []);
+	if (loading) return <Spinner />;
 	return (
 		<div className="w-screen h-screen relative bg-sky-100 ">
 			<div className=" flex">

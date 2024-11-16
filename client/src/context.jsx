@@ -12,6 +12,9 @@ export const UserProvider = ({ children }) => {
 	const [userTasks, setUserTasks] = useState(
 		() => JSON.parse(localStorage.getItem("userTasks")) || []
 	);
+	const [selectedTeam, setSelectedTeam] = useState(
+		() => JSON.parse(localStorage.getItem("selectedTeam")) || null
+	);
 
 	useEffect(() => {
 		localStorage.setItem("user", JSON.stringify(user));
@@ -22,14 +25,19 @@ export const UserProvider = ({ children }) => {
 	useEffect(() => {
 		localStorage.setItem("userTasks", JSON.stringify(userTasks));
 	}, [userTasks]);
+	useEffect(() => {
+		localStorage.setItem("selectedTeam", JSON.stringify(selectedTeam));
+	}, [selectedTeam]);
 
 	const contextValue = {
 		user,
 		userTeams,
 		userTasks,
+		selectedTeam,
 		setUser,
 		setUserTasks,
 		setUserTeams,
+		setSelectedTeam,
 	};
 	return (
 		<UserContext.Provider value={contextValue}>

@@ -6,7 +6,6 @@ import useGetTasksHook from "./useGetTasksHook.js";
 const useDeleteTaskHook = () => {
 	const [error, setError] = useState(null);
 	const [loading, setLoading] = useState(false);
-	const { user, setUserTasks } = useUserContext();
 	const { getTasks } = useGetTasksHook();
 	const deleteTask = async (taskId) => {
 		setLoading(true);

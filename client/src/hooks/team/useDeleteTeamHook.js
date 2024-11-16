@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { BACKEND_URL } from "../../constant.js";
-import useUserContext from "../../context.jsx";
+import { useUserContext } from "../../context.jsx";
 import { toast } from "react-toastify";
 import useGetUserTeamsHook from "./useGetUserTeamsHook.js";
 const useDeleteTeamHook = () => {

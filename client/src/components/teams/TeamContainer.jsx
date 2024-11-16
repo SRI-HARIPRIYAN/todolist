@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { FaTasks } from "react-icons/fa";
 import { MdGroup } from "react-icons/md";
@@ -7,10 +7,24 @@ import TeamTaskTable from "./TeamTaskTable";
 import { MdAddTask } from "react-icons/md";
 import AddTeamMember from "./AddTeamMember";
 import AddNewTask from "./AddNewTask";
+import useGetTeamInfoHook from "../../hooks/team/useGetTeamInfoHook";
+import Spinner from "../Spinner";
 const TeamContainer = ({ teamId }) => {
 	const [selectedOption, setSelectedOption] = useState("allTasks");
 	const [addNewMember, setAddNewMember] = useState(false);
 	const [addNewTask, setAddNewTask] = useState(false);
+	const [teamInfo, setTeamInfo] = useState(null);
+	const { getTeam, loading } = useGetTeamInfoHook();
+	/* useEffect(() => {
+		const team = getTeam(teamId);
+		setTeamInfo(team);
+	}, [teamId]); */
+
+	// need to fetch only if there is a team
+
+	if (loading) {
+		return <Spinner />;
+	}
 	return (
 		<div className="flex flex-col flex-1 p-2 gap-2 bg-sky-50">
 			<Link
@@ -20,7 +34,7 @@ const TeamContainer = ({ teamId }) => {
 				{"> "}Dashboard
 			</Link>
 			<h2 className="font-semibold text-sm sm:text-md opacity-80 bg-white p-1">
-				TeamName {teamId}
+				{teamInfo?.teamName}
 			</h2>
 			<section className="p-1 flex flex-col gap-2">
 				<div className="flex gap-2 items-center font-semibold ">
@@ -36,8 +50,9 @@ const TeamContainer = ({ teamId }) => {
 					</button>
 				</div>
 				<ul className="ml-2 p-2 text-sm sm:text-md bg-white">
-					<li>Member 1</li>
-					<li>Member 2</li>
+					{teamInfo?.members?.map((member) => (
+						<li key={i}>{member.userName}</li>
+					))}
 				</ul>
 			</section>
 			<section className="p-1">
