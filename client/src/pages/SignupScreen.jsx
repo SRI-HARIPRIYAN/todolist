@@ -1,22 +1,19 @@
 import React, { useState } from "react";
-import { useNavigate, Link } from "react-router-dom";
+import { Link } from "react-router-dom";
 import loginImage from "../assets/loginscreen.jpg";
 import useSignUpHook from "../hooks/user/useSignUpHook";
 import Spinner from "../components/Spinner";
-import { toast } from "react-toastify";
+
 const SignupScreen = () => {
 	const [userName, setUserName] = useState("");
 	const [password, setPassword] = useState("");
 	const [email, setEmail] = useState("");
 
-	const navigate = useNavigate();
 	const { signUp, loading } = useSignUpHook();
 
 	const handleSubmit = async (e) => {
 		e.preventDefault();
 		await signUp(userName, email, password);
-		navigate("/tasks/dashboard");
-		toast.success("Signed in successfully");
 	};
 
 	const handleGoogleAuth = () => {
@@ -47,6 +44,7 @@ const SignupScreen = () => {
 						value={userName}
 						autoComplete="name"
 						onChange={(e) => setUserName(e.target.value)}
+						required
 					/>
 					<input
 						type="email"
@@ -55,6 +53,7 @@ const SignupScreen = () => {
 						className=" h-10 pl-2 rounded-md "
 						value={email}
 						onChange={(e) => setEmail(e.target.value)}
+						required
 					/>
 					<input
 						type="password"
@@ -64,6 +63,7 @@ const SignupScreen = () => {
 						value={password}
 						autoComplete="your password"
 						onChange={(e) => setPassword(e.target.value)}
+						required
 					/>
 					<button
 						type="submit"

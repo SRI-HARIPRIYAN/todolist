@@ -1,7 +1,9 @@
 import React from "react";
 import { IoMdCheckmarkCircleOutline } from "react-icons/io";
-
+import Spinner from "../Spinner.jsx";
+import useUpdateTashHook from "../../hooks/task/useUpdateTaskHook";
 const AllTasks = () => {
+	const { updateTask, loading } = useUpdateTashHook();
 	let tasks = [
 		{
 			title: "task1",
@@ -16,42 +18,57 @@ const AllTasks = () => {
 			status: "pending",
 		},
 	];
+	const handleChange = async (taskId, e) => {
+		e.preventDefault();
+		await updateTask(taskId, { status: e.target.value });
+	};
+	if (loading) {
+		return <Spinner />;
+	}
 	return (
 		<div className="p-2 flex flex-col gap-2 ">
-			<div className="overflow-x-scroll">
+			<div className="">
 				<h2 className="bg-white p-2 font-bold my-2">Personal tasks</h2>
 
-				<div className="overflow-scroll">
+				<div className="">
 					<table className="border-2 bg-white w-full overflow-x-scroll text-center ">
 						<thead>
 							<tr className=" py-2 opacity-75 ">
-								<th className="w-1/5">
-									<IoMdCheckmarkCircleOutline className="inline" />
-								</th>
 								<th className="w-1/5">Title</th>
 								<th className="w-1/5">Description</th>
 								<th className="w-1/5">Due </th>
 								<th className="w-1/5">Status</th>
+								<th className="w-1/5">
+									<IoMdCheckmarkCircleOutline className="inline" />
+								</th>
 							</tr>
 						</thead>
 						<tbody className="">
 							{tasks.map((task, i) => (
 								<tr key={i} className="border-2  ">
-									<td className="w-">
-										<input
-											className="inline-block w-[30px]"
-											type="checkbox"
-											name=""
-											id=""
-											defaultChecked={
-												task.status === "pending"
-											}
-										/>
-									</td>
 									<td>{task.title}</td>
 									<td>{task.description}</td>
 									<td>{task.due}</td>
 									<td>{task.status}</td>
+									<td>
+										<select
+											name="status"
+											id="status"
+											onChange={(e) =>
+												handleChange(task._id, e)
+											}
+										>
+											<option value="pending">
+												pending
+											</option>
+											<option value="inProgress">
+												In Progress
+											</option>
+											<option value="completed">
+												Completed
+											</option>
+										</select>
+									</td>
 								</tr>
 							))}
 						</tbody>
@@ -64,13 +81,13 @@ const AllTasks = () => {
 				<table>
 					<thead>
 						<tr>
-							<th>
-								<IoMdCheckmarkCircleOutline />
-							</th>
 							<th>Title</th>
 							<th>Description</th>
 							<th>Due </th>
 							<th>Status</th>
+							<th>
+								<IoMdCheckmarkCircleOutline />
+							</th>
 						</tr>
 					</thead>
 				</table>

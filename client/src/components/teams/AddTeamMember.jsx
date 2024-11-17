@@ -1,5 +1,4 @@
 import React from "react";
-import { MdOutlinePersonSearch } from "react-icons/md";
 const AddTeamMember = ({ setAddNewMember }) => {
 	console.log("new member added");
 	return (

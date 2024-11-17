@@ -7,7 +7,6 @@ const Header = ({ setIsOpen }) => {
 	const { user } = useUserContext();
 	const [showLogout, setShowLogout] = useState(false);
 	const { logout, loading } = useLogoutHook();
-
 	const handleLogout = async () => {
 		await logout();
 	};
@@ -24,23 +23,20 @@ const Header = ({ setIsOpen }) => {
 				<div className=" bg-white w-full h-[3px] rounded-sm"></div>
 				<div className=" bg-white w-full h-[3px] rounded-sm"></div>
 			</button>
-
 			<div
 				onClick={() => setShowLogout((prev) => !prev)}
-				className=" ml-auto text-white font-bold"
+				className=" ml-auto text-white font-bold "
 			>
 				<div className="inline border-2 rounded-full p-1 mr-2">
 					<MdOutlinePerson className="inline-block   text-xl" />
 				</div>
 				<span>{user?.userName}</span>
-				<div className={`absolute ${showLogout ? "block" : "hidden"}`}>
-					<button
-						className="text-black bg-green-400 p-1"
-						onClick={handleLogout}
-					>
-						Logout
-					</button>
-				</div>
+				<button
+					onClick={handleLogout}
+					className="bg-green-500 px-1 text-white rounded-md ml-2"
+				>
+					Logout
+				</button>
 			</div>
 		</div>
 	);

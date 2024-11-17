@@ -7,7 +7,7 @@ import NewTask from "./NewTask.jsx";
 const TaskDashboard = () => {
 	const [openTask, setOpenTask] = useState(false);
 	return (
-		<div className="relative p-2">
+		<div className="relative p-2 ">
 			<h1 className="font-bold p-2">
 				Task Management
 				<span className="opacity-25 text-sm">dashboard</span>

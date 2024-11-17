@@ -1,4 +1,3 @@
-import axios from "axios";
 import { BACKEND_URL } from "../../constant.js";
 import { useUserContext } from "../../context.jsx";
 import { useState } from "react";
@@ -18,7 +17,7 @@ const useLoginHook = () => {
 				credentials: "include",
 			});
 			const data = await response.json();
-			if (data.error) {
+			if (data["error"]) {
 				throw new Error(data.error);
 			}
 			console.log("user data: ", data);
