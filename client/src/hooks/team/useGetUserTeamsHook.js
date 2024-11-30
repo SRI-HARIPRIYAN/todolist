@@ -5,7 +5,7 @@ import { toast } from "react-toastify";
 const useGetUserTeamsHook = () => {
 	const [loading, setLoading] = useState(false);
 	const [error, setError] = useState(null);
-	const { setUserTeams } = useUserContext();
+	const { setUserTeams, setSelectedTeam } = useUserContext();
 	const getTeams = async () => {
 		setLoading(true);
 		try {
@@ -15,6 +15,7 @@ const useGetUserTeamsHook = () => {
 				credentials: "include",
 			});
 			const data = await response.json();
+			setSelectedTeam(data[0] || null);
 			if (!response.ok) {
 				throw new Error(data.error || "Unable to get teams");
 			} else {

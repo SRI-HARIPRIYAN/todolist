@@ -6,19 +6,23 @@ const useGetTeamInfoHook = () => {
 	const [loading, setLoading] = useState(false);
 	const [error, setError] = useState(null);
 	const { setUserTeams } = useUserContext();
-	const getTeam = async (teamId) => {
-		if (teamId) {
+	const getTeam = async (selectedTeam) => {
+		if (selectedTeam) {
 			setLoading(true);
 			try {
-				const response = await fetch(`${BACKEND_URL}/teams/${teamId}`, {
-					method: "GET",
-					headers: { "Content-Type": "application/json" },
-					credentials: "include",
-				});
+				const response = await fetch(
+					`${BACKEND_URL}/teams/${selectedTeam}`,
+					{
+						method: "GET",
+						headers: { "Content-Type": "application/json" },
+						credentials: "include",
+					}
+				);
 				const data = await response.json();
 				if (!response.ok) {
 					throw new Error(data.error || "Unable to get team");
 				} else {
+					console.log(data);
 					return data;
 				}
 			} catch (error) {

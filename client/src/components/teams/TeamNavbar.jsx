@@ -3,8 +3,8 @@ import { HiArrowSmLeft } from "react-icons/hi";
 import { MdGroups } from "react-icons/md";
 import CreateTeam from "./CreateTeam";
 import { useUserContext } from "../../context";
-const TeamNavbar = ({ setSelectedTeam, isAsideClicked, setIsAsideClicked }) => {
-	const { userTeams } = useUserContext();
+const TeamNavbar = ({ isAsideClicked, setIsAsideClicked }) => {
+	const { userTeams, setSelectedTeam } = useUserContext();
 	const [createTeam, setCreateTeam] = useState(false);
 	return (
 		<nav

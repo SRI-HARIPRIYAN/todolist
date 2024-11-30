@@ -6,6 +6,7 @@ const CreateTeam = ({ setCreateTeam }) => {
 	const { createTeam, loading } = useCreateTeamHook();
 	const handleCreateTeam = async () => {
 		await createTeam(title);
+		setCreateTeam(false);
 	};
 	if (loading) {
 		return <Spinner />;

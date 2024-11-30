@@ -13,14 +13,14 @@ const TaskList = () => {
 						selectedOption === "allTasks"
 							? "bg-white font-semibold  border-t-sky-600 border-opacity-100"
 							: " border-t-transparent"
-					} `}
+					}`}
 				>
 					All tasks
 				</button>
 				<button
-					onClick={() => setSelectedOption("inComplete")}
+					onClick={() => setSelectedOption("pending")}
 					className={` border-t-4 border-opacity-0 p-2 sm:px-6 md:px-10  ${
-						selectedOption === "inComplete"
+						selectedOption === "pending"
 							? "bg-white border-t-sky-600 border-opacity-100 font-semibold"
 							: "border-t-transparent"
 					} `}

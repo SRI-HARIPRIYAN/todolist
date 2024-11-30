@@ -6,7 +6,7 @@ const useAddMemberHook = () => {
 	const [loading, setLoading] = useState(false);
 	const [error, setError] = useState(null);
 	const { getTeams } = useGetUserTeamsHook();
-	const createTeam = async (teamId, members) => {
+	const addMember = async (teamId, members) => {
 		setLoading(true);
 		try {
 			const response = await fetch(
@@ -15,6 +15,7 @@ const useAddMemberHook = () => {
 					method: "POST",
 					headers: { "Content-Type": "application/json" },
 					body: JSON.stringify({ members }),
+					credentials: "include",
 				}
 			);
 			const data = await response.json();
@@ -32,7 +33,7 @@ const useAddMemberHook = () => {
 			setLoading(false);
 		}
 	};
-	return { createTeam, loading, error };
+	return { addMember, loading, error };
 };
 
 export default useAddMemberHook;

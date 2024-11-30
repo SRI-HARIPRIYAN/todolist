@@ -9,16 +9,18 @@ import AddTeamMember from "./AddTeamMember";
 import AddNewTask from "./AddNewTask";
 import useGetTeamInfoHook from "../../hooks/team/useGetTeamInfoHook";
 import Spinner from "../Spinner";
-const TeamContainer = ({ teamId }) => {
+import { useUserContext } from "../../context";
+const TeamContainer = () => {
 	const [selectedOption, setSelectedOption] = useState("allTasks");
 	const [addNewMember, setAddNewMember] = useState(false);
 	const [addNewTask, setAddNewTask] = useState(false);
-	const [teamInfo, setTeamInfo] = useState(null);
+	const [team, setTeam] = useState({});
+	const { selectedTeam } = useUserContext();
 	const { getTeam, loading } = useGetTeamInfoHook();
-	/* useEffect(() => {
-		const team = getTeam(teamId);
-		setTeamInfo(team);
-	}, [teamId]); */
+	useEffect(() => {
+		const data = getTeam(selectedTeam._id);
+		setTeam(data);
+	}, [selectedTeam]);
 
 	// need to fetch only if there is a team
 
@@ -34,7 +36,7 @@ const TeamContainer = ({ teamId }) => {
 				{"> "}Dashboard
 			</Link>
 			<h2 className="font-semibold text-sm sm:text-md opacity-80 bg-white p-1">
-				{teamInfo?.teamName}
+				{selectedTeam?.teamName}
 			</h2>
 			<section className="p-1 flex flex-col gap-2">
 				<div className="flex gap-2 items-center font-semibold ">
@@ -50,7 +52,7 @@ const TeamContainer = ({ teamId }) => {
 					</button>
 				</div>
 				<ul className="ml-2 p-2 text-sm sm:text-md bg-white">
-					{teamInfo?.members?.map((member) => (
+					{selectedTeam?.members?.map((member) => (
 						<li key={i}>{member.userName}</li>
 					))}
 				</ul>

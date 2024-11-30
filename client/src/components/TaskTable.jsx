@@ -2,27 +2,28 @@ import React, { useEffect, useState } from "react";
 import { TiTick } from "react-icons/ti";
 import { useUserContext } from "../context.jsx";
 const TaskTable = ({ selectedOption }) => {
-	//get from global state
 	const { userTasks } = useUserContext();
-	const [tableTasks, setTableTasks] = useState([]);
+	const [tableTasks, setTableTasks] = useState(userTasks);
 	const option = selectedOption;
+
 	useEffect(() => {
-		let filteredTasks = userTasks;
 		if (option === "completed") {
-			filteredTasks = userTasks?.filter(
-				(task) => task.status === "completed"
+			setTableTasks(
+				userTasks?.filter((task) => task.status === "completed")
 			);
 		} else if (option === "inProgress") {
-			filteredTasks = userTasks?.filter(
-				(task) => task.status === "inProgress"
+			setTableTasks(
+				userTasks?.filter((task) => task.status === "inProgress")
 			);
 		} else if (option === "pending") {
-			filteredTasks = userTasks?.filter(
-				(task) => task.status === "pending"
+			setTableTasks(
+				userTasks?.filter((task) => task.status === "pending")
 			);
+		} else {
+			setTableTasks(userTasks);
 		}
-		setTableTasks(filteredTasks);
 	}, [userTasks, option]);
+	console.log(tableTasks);
 	return (
 		<div className="bg-white pt-6 md:w-2/3">
 			{tableTasks?.length === 0 ? (
@@ -40,7 +41,7 @@ const TaskTable = ({ selectedOption }) => {
 						</tr>
 					</thead>
 					<tbody>
-						{userTasks?.map((task, index) => (
+						{tableTasks?.map((task, index) => (
 							<tr key={index}>
 								<td>{index + 1}</td>
 								<td>{task.title}</td>

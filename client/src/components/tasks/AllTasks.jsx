@@ -1,83 +1,99 @@
-import React from "react";
-import { IoMdCheckmarkCircleOutline } from "react-icons/io";
+import React, { useEffect } from "react";
 import Spinner from "../Spinner.jsx";
 import useUpdateTashHook from "../../hooks/task/useUpdateTaskHook";
+import { useUserContext } from "../../context.jsx";
+import useGetTasksHook from "../../hooks/task/useGetTasksHook.js";
+import { MdDelete } from "react-icons/md";
+import useDeleteTaskHook from "../../hooks/task/useDeleteTaskHook.js";
+import { FaRegEdit } from "react-icons/fa";
 const AllTasks = () => {
 	const { updateTask, loading } = useUpdateTashHook();
-	let tasks = [
-		{
-			title: "task1",
-			description: "des1",
-			due: "20-11-2002",
-			status: "pending",
-		},
-		{
-			title: "task2",
-			description: "des2",
-			due: "20-11-2002",
-			status: "pending",
-		},
-	];
+	const { userTasks } = useUserContext();
+	const { getTasks } = useGetTasksHook();
+	const { deleteTask } = useDeleteTaskHook();
 	const handleChange = async (taskId, e) => {
 		e.preventDefault();
-		await updateTask(taskId, { status: e.target.value });
+		let val = e.target.value;
+		console.log(val);
+		await updateTask(taskId, { status: val });
+		getTasks();
 	};
+	const formatDueDate = (dueDate) => {
+		let currDate = new Date();
+		let taskDate = new Date(dueDate);
+
+		const diff = taskDate - currDate;
+		const days = Math.ceil(diff / (1000 * 60 * 60 * 24));
+		if (days < 0) return "Completed";
+		if (days === 0) return "Due today";
+		return `${days} days left`;
+	};
+	useEffect(() => {
+		getTasks();
+	}, []);
 	if (loading) {
 		return <Spinner />;
 	}
 	return (
-		<div className="p-2 flex flex-col gap-2 ">
-			<div className="">
-				<h2 className="bg-white p-2 font-bold my-2">Personal tasks</h2>
-
-				<div className="">
-					<table className="border-2 bg-white w-full overflow-x-scroll text-center ">
-						<thead>
-							<tr className=" py-2 opacity-75 ">
-								<th className="w-1/5">Title</th>
-								<th className="w-1/5">Description</th>
-								<th className="w-1/5">Due </th>
-								<th className="w-1/5">Status</th>
-								<th className="w-1/5">
-									<IoMdCheckmarkCircleOutline className="inline" />
-								</th>
+		<div className="p-2 flex flex-col gap-2 bg-sky-100 ">
+			<h2 className="bg-white p-2 font-bold my-2 ">Personal tasks</h2>
+			<div className=" overflow-x-auto">
+				<table className="border-2 min-w-full bg-white text-center">
+					<thead>
+						<tr className=" py-2 opacity-75 ">
+							<th className="w-1/5">Title</th>
+							<th className="w-1/5">Description</th>
+							<th className="w-1/5">Due </th>
+							<th className="w-1/5">Status</th>
+							<th className="w-1/5">
+								<FaRegEdit className="inline" />
+							</th>
+							<th>Delete</th>
+						</tr>
+					</thead>
+					<tbody className="">
+						{userTasks.map((task, i) => (
+							<tr key={i} className="border-2  ">
+								<td className="">{task.title}</td>
+								<td className="overflow-x-hidden">
+									{task.description}
+								</td>
+								<td>{formatDueDate(task.dueDate)}</td>
+								<td>{task.status}</td>
+								<td>
+									<select
+										name="status"
+										id="status"
+										value={task.status}
+										onChange={(e) =>
+											handleChange(task._id, e)
+										}
+									>
+										<option value="pending">pending</option>
+										<option value="inProgress">
+											In Progress
+										</option>
+										<option value="completed">
+											Completed
+										</option>
+									</select>
+								</td>
+								<td>
+									<div
+										onClick={async () => {
+											deleteTask(task._id);
+										}}
+									>
+										<MdDelete size={20} />
+									</div>
+								</td>
 							</tr>
-						</thead>
-						<tbody className="">
-							{tasks.map((task, i) => (
-								<tr key={i} className="border-2  ">
-									<td>{task.title}</td>
-									<td>{task.description}</td>
-									<td>{task.due}</td>
-									<td>{task.status}</td>
-									<td>
-										<select
-											name="status"
-											id="status"
-											onChange={(e) =>
-												handleChange(task._id, e)
-											}
-										>
-											<option value="pending">
-												pending
-											</option>
-											<option value="inProgress">
-												In Progress
-											</option>
-											<option value="completed">
-												Completed
-											</option>
-										</select>
-									</td>
-								</tr>
-							))}
-						</tbody>
-					</table>
-				</div>
+						))}
+					</tbody>
+				</table>
 			</div>
-			<div className="overflow-x-scroll">
+			{/* <div className="overflow-x-scroll">
 				<h2 className="bg-white p-2 font-bold my-2">Assigned tasks </h2>
-
 				<table>
 					<thead>
 						<tr>
@@ -91,7 +107,7 @@ const AllTasks = () => {
 						</tr>
 					</thead>
 				</table>
-			</div>
+			</div> */}
 		</div>
 	);
 };

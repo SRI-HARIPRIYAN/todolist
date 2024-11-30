@@ -11,17 +11,22 @@ const useUpdateTaskHook = () => {
 		setLoading(true);
 		try {
 			const res = await fetch(`${BACKEND_URL}/tasks/${taskId}`, {
-				method: "POST",
-				headers: { "Content-Type": "Application/json" },
+				method: "PATCH",
+				headers: { "Content-Type": "application/json" },
+				body: JSON.stringify(updatedTask),
 				credentials: "include",
-				body: { updatedTask },
 			});
 			const data = await res.json();
 			if (!res.ok) {
+				console.log(data.error);
 				throw new Error(data.error || "Something went wrong");
 			} else {
-				setUserTasks((prevTasks) => [...prevTasks, data] || data);
-				toast.success("Task added ");
+				setUserTasks((prevTasks) =>
+					prevTasks.map((task) =>
+						task._id === taskId ? { ...task, updatedTask } : task
+					)
+				);
+				toast.success("Task updated successfully ");
 			}
 		} catch (error) {
 			console.log("Error in updateTask:", error);

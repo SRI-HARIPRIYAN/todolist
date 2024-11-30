@@ -1,6 +1,13 @@
-import React from "react";
+import React, { useState } from "react";
+import useAddMemberHook from "../../hooks/team/useAddMemberHook";
 const AddTeamMember = ({ setAddNewMember }) => {
-	console.log("new member added");
+	const [member, setMember] = useState("");
+	const { addMember } = useAddMemberHook();
+	const handleAddNewMember = async (e) => {
+		e.preventDefault();
+		await addMember(member);
+		setAddNewMember(false);
+	};
 	return (
 		<div className="absolute top-0 left-0 w-screen h-screen   backdrop-blur-sm z-20 grid place-content-center">
 			<div className="bg-blue-300 z-30 flex flex-col gap-2 p-6 rounded-md bg-opacity-50 font-bold relative">
@@ -11,12 +18,18 @@ const AddTeamMember = ({ setAddNewMember }) => {
 						placeholder="search"
 						className="pl-2 rounded-md h-10 font-normal border-none focus:outline-blue-300 focus:outline-4"
 						list="members"
+						onChange={(e) => setMember(e.target.value)}
 					/>
 					<datalist id="members">
 						{/* <option value="member 1"></option>
 						<option value="member 2"></option> */}
 					</datalist>
-					<button className=" p-2 text-green-700 ">Add</button>
+					<button
+						onClick={(e) => handleAddNewMember(e)}
+						className=" p-2 text-green-700 "
+					>
+						Add
+					</button>
 				</div>
 				<button
 					onClick={() => setAddNewMember((prev) => !prev)}

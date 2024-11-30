@@ -7,9 +7,9 @@ import Spinner from "../components/Spinner.jsx";
 const TaskHomeScreen = () => {
 	const [isOpen, setIsOpen] = useState(false);
 	const { getTasks, loading, error } = useGetTasksHook();
-	/* useEffect(() => {
+	useEffect(() => {
 		getTasks();
-	}, []); */
+	}, []);
 	if (loading) return <Spinner />;
 	return (
 		<div className="w-screen h-screen relative bg-sky-100 ">

@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { FaRegListAlt } from "react-icons/fa";
 import { FaPenSquare } from "react-icons/fa";
 import { RiProgress6Line } from "react-icons/ri";
@@ -6,18 +6,22 @@ import { IoCheckmarkDoneCircle } from "react-icons/io5";
 import { useUserContext } from "../context";
 const TaskSummary = () => {
 	const { userTasks } = useUserContext();
-	let completed = 0;
-	let inProgress = 0;
-	let pending = 0;
+	const [completed, setCompleted] = useState(0);
+	const [inProgress, setInProgress] = useState(0);
+	const [pending, setPending] = useState(0);
 	let allTasks = userTasks.length;
+
 	useEffect(() => {
-		completed = userTasks.filter(
-			(task) => task.status === "completed"
-		).length;
-		pending = userTasks.filter((task) => task.status === "pending").length;
-		inProgress = userTasks.filter(
-			(task) => task.status === "inProgress"
-		).length;
+		setCompleted(
+			userTasks.filter((task) => task.status === "completed").length
+		);
+		console.log(completed);
+		setPending(
+			userTasks.filter((task) => task.status === "pending").length
+		);
+		setInProgress(
+			userTasks.filter((task) => task.status === "inProgress").length
+		);
 	}, [userTasks]);
 	return (
 		<div className="flex flex-col gap-3 ">
