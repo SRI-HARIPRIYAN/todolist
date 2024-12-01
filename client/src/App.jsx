@@ -16,8 +16,13 @@ const App = () => {
 	return (
 		<Routes>
 			<Route path="/" element={<HomeScreen />} />
-			<Route path="/login" element={<LoginScreen />} />
-			<Route path="/signup" element={<SignupScreen />} />
+			{!user && (
+				<>
+					<Route path="/login" element={<LoginScreen />} />
+					<Route path="/signup" element={<SignupScreen />} />
+				</>
+			)}
+
 			{user && (
 				<Route path="/tasks" element={<TaskHomeScreen />}>
 					<Route path="dashboard" element={<TaskDashboard />} />

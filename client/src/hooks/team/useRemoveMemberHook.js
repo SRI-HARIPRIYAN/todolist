@@ -1,37 +1,40 @@
 import { useState } from "react";
 import { BACKEND_URL } from "../../constant.js";
 import { toast } from "react-toastify";
-import useGetUserTeamsHook from "./useGetUserTeamsHook.js";
+import useGetTeamInfoHook from "./useGetTeamInfoHook.js";
+import { useUserContext } from "../../context.jsx";
 const useRemoveMemberHook = () => {
 	const [loading, setLoading] = useState(false);
-	const [error, setError] = useState(null);
-	const { getUserTeams } = useGetUserTeamsHook();
-	const deleteMember = async (teamId, memberId) => {
+	const { getTeam } = useGetTeamInfoHook();
+	const { selectedTeam, setSelectedTeam } = useUserContext();
+	const removeMember = async (memberId) => {
 		setLoading(true);
 		try {
+			console.log(" member id: ", memberId);
 			const response = await fetch(
-				`${BACKEND_URL}/teams/${teamId}/members`,
+				`${BACKEND_URL}/teams/${selectedTeam._id}/members`,
 				{
 					method: "DELETE",
 					credentials: "include",
+					headers: { "Content-Type": "application/json" },
 					body: JSON.stringify({ memberId }),
 				}
 			);
+			const data = await response.json();
 			if (!response.ok) {
 				throw new Error(data.error || "Unable to remove member");
 			} else {
-				getUserTeams();
+				setSelectedTeam(data);
 				toast.success("User removed");
 			}
 		} catch (error) {
 			console.log("Error in remove member hook: ", error);
-			setError(error);
 			toast.error(error.message);
 		} finally {
 			setLoading(false);
 		}
 	};
-	return { deleteMember, loading, error };
+	return { removeMember, loading };
 };
 
 export default useRemoveMemberHook;

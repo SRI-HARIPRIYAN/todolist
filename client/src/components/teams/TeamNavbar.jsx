@@ -1,11 +1,16 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { HiArrowSmLeft } from "react-icons/hi";
 import { MdGroups } from "react-icons/md";
 import CreateTeam from "./CreateTeam";
 import { useUserContext } from "../../context";
+import useGetTeamInfoHook from "../../hooks/team/useGetTeamInfoHook";
 const TeamNavbar = ({ isAsideClicked, setIsAsideClicked }) => {
 	const { userTeams, setSelectedTeam } = useUserContext();
 	const [createTeam, setCreateTeam] = useState(false);
+	const { getTeam } = useGetTeamInfoHook();
+	useEffect(() => {
+		getTeam();
+	}, []);
 	return (
 		<nav
 			className={` absolute md:relative  ${
@@ -25,14 +30,14 @@ const TeamNavbar = ({ isAsideClicked, setIsAsideClicked }) => {
 			</h2>
 
 			<ul className="flex flex-col  font-semibold text-center">
-				{userTeams?.map((team) => (
+				{userTeams?.map((team, i) => (
 					<li
 						onClick={() => {
-							setSelectedTeam(team._id);
+							setSelectedTeam(team);
 							setIsAsideClicked(false);
 						}}
 						className="bg-slate-100 p-2 border-b-2 cursor-pointer opacity-65"
-						key={team._id}
+						key={i}
 					>
 						{team.teamName}
 					</li>

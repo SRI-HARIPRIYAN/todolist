@@ -1,20 +1,22 @@
 import { useState } from "react";
 import { BACKEND_URL } from "../../constant.js";
 import { toast } from "react-toastify";
-import useGetUserTeamsHook from "./useGetUserTeamsHook.js";
+import { useUserContext } from "../../context";
+import useGetTeamInfoHook from "./useGetTeamInfoHook.js";
 const useAddMemberHook = () => {
 	const [loading, setLoading] = useState(false);
-	const [error, setError] = useState(null);
-	const { getTeams } = useGetUserTeamsHook();
-	const addMember = async (teamId, members) => {
+	const { selectedTeam } = useUserContext();
+	const { getTeam } = useGetTeamInfoHook();
+	const addMember = async (member) => {
 		setLoading(true);
 		try {
+			console.log(member);
 			const response = await fetch(
-				`${BACKEND_URL}/teams/${teamId}/members`,
+				`${BACKEND_URL}/teams/${selectedTeam._id}/members`,
 				{
 					method: "POST",
 					headers: { "Content-Type": "application/json" },
-					body: JSON.stringify({ members }),
+					body: JSON.stringify({ memberName: member }),
 					credentials: "include",
 				}
 			);
@@ -22,18 +24,17 @@ const useAddMemberHook = () => {
 			if (!response.ok) {
 				throw new Error(data.error || "Unable to add member");
 			} else {
-				await getTeams();
+				await getTeam(selectedTeam._id);
 				toast.success("member added");
 			}
 		} catch (error) {
 			console.log("Error in add member: ", error);
-			setError(error);
 			toast.error(error.message);
 		} finally {
 			setLoading(false);
 		}
 	};
-	return { addMember, loading, error };
+	return { addMember, loading };
 };
 
 export default useAddMemberHook;

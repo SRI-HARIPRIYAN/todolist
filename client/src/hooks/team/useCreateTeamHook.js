@@ -4,7 +4,6 @@ import { useUserContext } from "../../context.jsx";
 import { toast } from "react-toastify";
 const useCreateTeamHook = () => {
 	const [loading, setLoading] = useState(false);
-	const [error, setError] = useState(null);
 	const { setUserTeams } = useUserContext();
 	const createTeam = async (teamName) => {
 		setLoading(true);
@@ -24,13 +23,12 @@ const useCreateTeamHook = () => {
 			}
 		} catch (error) {
 			console.log("Error in create team: ", error);
-			setError(error);
 			toast.error(error.message);
 		} finally {
 			setLoading(false);
 		}
 	};
-	return { createTeam, loading, error };
+	return { createTeam, loading };
 };
 
 export default useCreateTeamHook;

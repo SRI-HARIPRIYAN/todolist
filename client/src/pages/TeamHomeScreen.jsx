@@ -4,7 +4,6 @@ import TeamHeader from "../components/teams/TeamHeader";
 import TeamContainer from "../components/teams/TeamContainer";
 import useGetUserTeamsHook from "../hooks/team/useGetUserTeamsHook";
 import Spinner from "../components/Spinner.jsx";
-import { useUserContext } from "../context.jsx";
 const TeamHomeScreen = () => {
 	const [isAsideClicked, setIsAsideClicked] = useState(false);
 	const { getTeams, loading } = useGetUserTeamsHook();

@@ -4,8 +4,7 @@ import { useUserContext } from "../../context.jsx";
 import { toast } from "react-toastify";
 const useGetUserTeamsHook = () => {
 	const [loading, setLoading] = useState(false);
-	const [error, setError] = useState(null);
-	const { setUserTeams, setSelectedTeam } = useUserContext();
+	const { setUserTeams, userTeams, setSelectedTeam } = useUserContext();
 	const getTeams = async () => {
 		setLoading(true);
 		try {
@@ -15,7 +14,7 @@ const useGetUserTeamsHook = () => {
 				credentials: "include",
 			});
 			const data = await response.json();
-			setSelectedTeam(data[0] || null);
+			setSelectedTeam(userTeams[0] || data[0] || null);
 			if (!response.ok) {
 				throw new Error(data.error || "Unable to get teams");
 			} else {
@@ -23,13 +22,12 @@ const useGetUserTeamsHook = () => {
 			}
 		} catch (error) {
 			console.log("Error in get all teams: ", error);
-			setError(error);
 			toast.error(error.message);
 		} finally {
 			setLoading(false);
 		}
 	};
-	return { getTeams, loading, error };
+	return { getTeams, loading };
 };
 
 export default useGetUserTeamsHook;

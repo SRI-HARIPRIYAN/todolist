@@ -5,23 +5,28 @@ import { MdGroup } from "react-icons/md";
 import { MdGroupAdd } from "react-icons/md";
 import TeamTaskTable from "./TeamTaskTable";
 import { MdAddTask } from "react-icons/md";
+import { IoPersonRemove } from "react-icons/io5";
 import AddTeamMember from "./AddTeamMember";
 import AddNewTask from "./AddNewTask";
 import useGetTeamInfoHook from "../../hooks/team/useGetTeamInfoHook";
 import Spinner from "../Spinner";
 import { useUserContext } from "../../context";
+import useRemoveMemberHook from "../../hooks/team/useRemoveMemberHook";
 const TeamContainer = () => {
 	const [selectedOption, setSelectedOption] = useState("allTasks");
 	const [addNewMember, setAddNewMember] = useState(false);
 	const [addNewTask, setAddNewTask] = useState(false);
-	const [team, setTeam] = useState({});
 	const { selectedTeam } = useUserContext();
-	const { getTeam, loading } = useGetTeamInfoHook();
-	useEffect(() => {
-		const data = getTeam(selectedTeam._id);
-		setTeam(data);
-	}, [selectedTeam]);
-
+	const { loading } = useGetTeamInfoHook();
+	const { removeMember } = useRemoveMemberHook();
+	const handleRemoveMember = (memberId, e) => {
+		e.preventDefault();
+		console.log(memberId);
+		if (window.confirm("Are you sure to remove this member")) {
+			console.log("function called");
+			removeMember(memberId);
+		}
+	};
 	// need to fetch only if there is a team
 
 	if (loading) {
@@ -52,8 +57,16 @@ const TeamContainer = () => {
 					</button>
 				</div>
 				<ul className="ml-2 p-2 text-sm sm:text-md bg-white">
-					{selectedTeam?.members?.map((member) => (
-						<li key={i}>{member.userName}</li>
+					{selectedTeam?.members?.map((member, i) => (
+						<li key={i} className="flex justify-between">
+							<p>{member.userName}</p>
+							<IoPersonRemove
+								className=" hover:cursor-pointer"
+								onClick={(e) =>
+									handleRemoveMember(member._id, e)
+								}
+							/>
+						</li>
 					))}
 				</ul>
 			</section>

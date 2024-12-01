@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 
 const AddNewTask = ({ setAddNewTask }) => {
-	console.log("new task added");
 	const [assignTo, setAssignTo] = useState("");
 	const [title, setTitle] = useState("");
 	const [description, setDescription] = useState("");

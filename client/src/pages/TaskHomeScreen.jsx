@@ -6,7 +6,7 @@ import useGetTasksHook from "../hooks/task/useGetTasksHook.js";
 import Spinner from "../components/Spinner.jsx";
 const TaskHomeScreen = () => {
 	const [isOpen, setIsOpen] = useState(false);
-	const { getTasks, loading, error } = useGetTasksHook();
+	const { getTasks, loading } = useGetTasksHook();
 	useEffect(() => {
 		getTasks();
 	}, []);

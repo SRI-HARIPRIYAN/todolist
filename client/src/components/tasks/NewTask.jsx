@@ -19,16 +19,16 @@ const NewTask = ({ setOpenTask }) => {
 	};
 
 	return (
-		<div className="w-screen h-screen absolute  top-0 flex flex-col items-center justify-center bg-sky-500 bg-opacity-25 text-white backdrop-blur-3xl z-60">
-			<div className="relative text-black w-[300px] sm:w-[400px] rounded-md border-2 p-4 border-yellow-400 bg-sky-300">
+		<div className="w-full h-full overflow-hidden absolute  top-0 left-0 flex flex-col items-center justify-center  bg-opacity-50  backdrop-blur-sm z-60">
+			<div className="relative text-black w-[300px] sm:w-[400px] rounded-md  p-4 sm:mt-32 bg-blue-300 bg-opacity-60">
 				<h2 className="font-bold text-black text-center">New Task</h2>
 				<button
 					onClick={() => setOpenTask((prev) => !prev)}
-					className="text-white bg-red-500 px-1 right-1 top-1 font-bold absolute"
+					className="text-white bg-red-500 px-1 rounded-md right-1 top-1 font-bold absolute"
 				>
 					close
 				</button>
-				<form className="  flex flex-col gap-4 p-4 text-white">
+				<form className="  flex flex-col gap-4 p-4 ">
 					<div className="flex items-center">
 						<label htmlFor="title" className=" w-1/2">
 							Title

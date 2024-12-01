@@ -25,29 +25,39 @@ const createTeam = async (req, res) => {
 
 const addMemberToTeam = async (req, res) => {
 	try {
-		const { newMembers } = req.body;
-		console.log("newMembers", newMembers);
+		const { memberName } = req.body;
+		console.log("memberName: ", memberName);
 		const { id: teamId } = req.params;
 		const team = await Team.findById(teamId);
-		const users = await User.find({ userName: { $in: newMembers } });
+		const user = await User.findOne({ userName: memberName }).select(
+			"-password"
+		);
 		//dont know what this will return an array of all the objects?
-		console.log("users", users);
+		console.log("team", team);
+		console.log("user", user);
+		console.log(user._id);
 
 		if (!team) {
 			return res.status(404).json({ message: "Team not found!" });
 		}
 
-		//if there is no users with the given newMember userName
-		if (users.length === 0) {
-			return res.status(404).json({ message: "No user found" });
+		if (!user) {
+			return res.status(404).json({ message: "User not found" });
+		}
+		if (team.members.includes(user._id)) {
+			return res.status(400).json({ error: "User already added" });
 		}
 
+		team.members.push(user._id);
+		console.log("members added: ", team.members);
+		user.teams.push(team._id);
+		console.log("user teams: ", user.teams);
 		//to ensure no duplicate id's are added
-		users.forEach((user) => {
+		/* users.forEach((user) => {
 			if (!team.members.includes(user._id)) {
 				team.members.push(user._id);
 			}
-		});
+		}); */
 
 		/* const team = await Team.findByIdAndUpdate(
 			teamId,
@@ -56,9 +66,8 @@ const addMemberToTeam = async (req, res) => {
 		  ); */
 
 		//team.members.push(...users.map((user) => user._id)); --> this will allow duplicate id's too
-		const response = await team.save();
-		console.log(users);
-		console.log("response", response);
+		await team.save();
+		await user.save();
 		res.status(200).json({ message: "Added successfully" });
 	} catch (error) {
 		console.log("Error in addMember controller", error);
@@ -68,12 +77,17 @@ const addMemberToTeam = async (req, res) => {
 
 const removeMember = async (req, res) => {
 	try {
+		console.log(req.body);
 		let { memberId } = req.body;
 		const { id: teamId } = req.params;
 		const team = await Team.findById(teamId);
+		const user = await User.findById(memberId);
 
 		if (!team) {
 			return res.status(404).json({ message: "Team not found!" });
+		}
+		if (!user) {
+			return res.status(404).json({ message: "User not found!" });
 		}
 		// memberId = memberId.toString();
 		console.log("before removing", team.members);
@@ -81,16 +95,18 @@ const removeMember = async (req, res) => {
 		const newteamMembers = team.members.filter(
 			(item) => item.toString() !== memberId.toString() // the id object cannot be compared with string object so converted both to ensure strinng comparision
 		);
-
 		team.members = newteamMembers;
-
+		user.teams = user.teams.filter(
+			(inTeam) => inTeam._id.toString() !== team._id.toString()
+		);
+		console.log("userteams: ", user.teams);
 		console.log("after removing", team.members);
 
 		//saving updated team
 		const respose = await team.save();
 
 		console.log("response", respose);
-		res.status(200).json({ message: "removed successfully" });
+		res.status(200).json(team);
 	} catch (error) {
 		console.log("Error in removemember controller", error);
 		res.status(500).json({ error: error.message });
