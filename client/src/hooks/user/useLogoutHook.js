@@ -1,9 +1,12 @@
 import { BACKEND_URL } from "../../constant.js";
 import { useState } from "react";
 import { toast } from "react-toastify";
-
+import { useUserContext } from "../../context.jsx";
 const useLogoutHook = () => {
 	const [loading, setLoading] = useState(false);
+
+	const { setUser, setUserTeams, setUserTasks, setSelectedTeam } =
+		useUserContext();
 	const logout = async () => {
 		try {
 			setLoading(true);
@@ -16,12 +19,10 @@ const useLogoutHook = () => {
 				throw new Error(data.error || "Logout failed");
 			}
 
-			[("user", "userTasks", "userTeams", "selectedTeam")].forEach(
-				(element) => {
-					localStorage.removeItem(element);
-				}
-			);
-
+			setUser(null);
+			setSelectedTeam(null);
+			setUserTasks([]);
+			setUserTeams([]);
 			toast.success(data.message);
 		} catch (error) {
 			toast.error(error?.message || error);

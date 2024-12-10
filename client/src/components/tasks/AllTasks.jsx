@@ -6,6 +6,7 @@ import useGetTasksHook from "../../hooks/task/useGetTasksHook.js";
 import { MdDelete } from "react-icons/md";
 import useDeleteTaskHook from "../../hooks/task/useDeleteTaskHook.js";
 import { FaRegEdit } from "react-icons/fa";
+import formatDueDate from "../../utils/formatDueDate.js";
 const AllTasks = () => {
 	const { updateTask, loading } = useUpdateTashHook();
 	const { userTasks } = useUserContext();
@@ -18,16 +19,6 @@ const AllTasks = () => {
 		await updateTask(taskId, { status: val });
 		getTasks();
 	};
-	const formatDueDate = (dueDate) => {
-		let currDate = new Date();
-		let taskDate = new Date(dueDate);
-
-		const diff = taskDate - currDate;
-		const days = Math.ceil(diff / (1000 * 60 * 60 * 24));
-		if (days < 0) return "Completed";
-		if (days === 0) return "Due today";
-		return `${days} days left`;
-	};
 	useEffect(() => {
 		getTasks();
 	}, []);
@@ -35,10 +26,10 @@ const AllTasks = () => {
 		return <Spinner />;
 	}
 	return (
-		<div className="p-2 flex flex-col gap-2 bg-sky-100 ">
-			<h2 className="bg-white p-2 font-bold my-2 ">Personal tasks</h2>
-			<div className=" overflow-x-auto">
-				<table className="border-2 min-w-full bg-white text-center">
+		<div className="p-2 flex flex-col gap-2 bg-sky-100 w-screen">
+			<h2 className="bg-white p-2 font-bold my-2">Personal tasks</h2>
+			<div className="w-full overflow-x-scroll">
+				<table className="border-2  bg-white text-center">
 					<thead>
 						<tr className=" py-2 opacity-75 ">
 							<th className="w-1/5">Title</th>

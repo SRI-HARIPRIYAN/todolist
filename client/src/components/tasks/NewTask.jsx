@@ -3,13 +3,16 @@ import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import useCreateTaskHook from "../../hooks/task/useCreateTaskHook";
 import Spinner from "../Spinner";
+import { useUserContext } from "../../context";
 const NewTask = ({ setOpenTask }) => {
-	const { createTask, loading, error } = useCreateTaskHook();
+	const { createTask, loading } = useCreateTaskHook();
+	const { user } = useUserContext();
 	const [taskData, setTaskData] = useState({
 		title: "",
 		description: "",
 		dueDate: new Date(),
 		status: "pending",
+		assignTo: user.userName,
 	});
 
 	const handleCreateTask = async (e) => {

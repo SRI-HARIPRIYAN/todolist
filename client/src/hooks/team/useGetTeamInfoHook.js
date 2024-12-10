@@ -30,8 +30,6 @@ const useGetTeamInfoHook = () => {
 			} finally {
 				setLoading(false);
 			}
-		} else {
-			toast.info("Create a team to collaborate");
 		}
 	};
 	return { getTeam, loading };

@@ -1,35 +1,34 @@
 import React, { useEffect, useState } from "react";
 import { TiTick } from "react-icons/ti";
 import { useUserContext } from "../context.jsx";
+import formatDueDate from "../utils/formatDueDate.js";
 const TaskTable = ({ selectedOption }) => {
 	const { userTasks } = useUserContext();
 	const [tableTasks, setTableTasks] = useState(userTasks);
-	const option = selectedOption;
-
 	useEffect(() => {
-		if (option === "completed") {
+		if (selectedOption === "completed") {
 			setTableTasks(
 				userTasks?.filter((task) => task.status === "completed")
 			);
-		} else if (option === "inProgress") {
+		} else if (selectedOption === "inProgress") {
 			setTableTasks(
 				userTasks?.filter((task) => task.status === "inProgress")
 			);
-		} else if (option === "pending") {
+		} else if (selectedOption === "pending") {
 			setTableTasks(
 				userTasks?.filter((task) => task.status === "pending")
 			);
 		} else {
 			setTableTasks(userTasks);
 		}
-	}, [userTasks, option]);
+	}, [userTasks, selectedOption]);
 	console.log(tableTasks);
 	return (
 		<div className="bg-white pt-6 md:w-2/3">
 			{tableTasks?.length === 0 ? (
 				<p>Add a task and get to work!!!</p>
 			) : (
-				<table className=" w-full text-sm  bg-white text-center">
+				<table className=" w-full text-sm bg-white text-center">
 					<thead className="font-normal text-sm py-2 border-collapse">
 						<tr>
 							<th className=" border-2 ">
@@ -37,7 +36,11 @@ const TaskTable = ({ selectedOption }) => {
 							</th>
 							<th className=" border-2">Title</th>
 							<th className=" border-2">Description</th>
-							<th className=" border-2">Due</th>
+							<th className=" border-2">
+								{selectedOption === "allTasks"
+									? "Status"
+									: "Due"}
+							</th>
 						</tr>
 					</thead>
 					<tbody>
@@ -46,7 +49,11 @@ const TaskTable = ({ selectedOption }) => {
 								<td>{index + 1}</td>
 								<td>{task.title}</td>
 								<td>{task.description}</td>
-								<td>{task.status}</td>
+								<td>
+									{selectedOption === "allTasks"
+										? task.status
+										: formatDueDate(task.dueDate)}
+								</td>
 							</tr>
 						))}
 					</tbody>

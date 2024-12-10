@@ -1,23 +1,32 @@
 import Task from "../model/taskModel.js";
 import Team from "../model/teamModel.js";
+import User from "../model/userModel.js";
 const addTask = async (req, res) => {
-	const { title, description, dueDate, assignedTo } = req.body;
+	console.log(req.body);
+	const { title, description, dueDate, assignTo } = req.body;
 	const userId = req.user._id;
 	try {
-		const taskExists = await Task.findOne({ title, assignedTo });
+		const assignedUserExists = await User.findOne({ userName: assignTo });
+		if (!assignedUserExists) {
+			return res.status(404).json({ message: "User not found" });
+		}
+		const taskExists = await Task.findOne({
+			title,
+			assignedTo: assignedUserExists._id,
+		});
 		if (taskExists) {
-			return res.status(400).json({ error: "Task already assigned" });
+			return res.status(400).json({ message: "Task already assigned" });
 		}
 		const task = await Task.create({
 			title,
 			description,
 			dueDate,
-			assignedTo,
+			assignedTo: assignedUserExists._id,
 			createdBy: userId,
 		});
 		res.status(201).json(task);
 	} catch (error) {
-		console.log("error in addTask controller");
+		console.log("error in addTask controller", error);
 		res.status(400).json({ error: error.message });
 	}
 };
@@ -79,11 +88,12 @@ const getTeamTasks = async (req, res) => {
 		if (teamMembers.length === 0) {
 			return res.status(400).json({ message: "No team members found" });
 		}
-
 		const memberTasks = await Task.find({
 			createdBy: userId,
 			assignedTo: { $in: teamMembers },
-		});
+		})
+			.populate("assignedTo", "userName")
+			.select("-__v -createdAt -updatedAt");
 		res.status(200).json(memberTasks);
 	} catch (error) {
 		console.log("error in get task controller");

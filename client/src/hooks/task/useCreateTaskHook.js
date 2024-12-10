@@ -6,19 +6,20 @@ import { toast } from "react-toastify";
 const useCreateTaskHook = () => {
 	const [error, setError] = useState(null);
 	const [loading, setLoading] = useState(false);
-	const { user, setUserTasks } = useUserContext();
+	const { setUserTasks } = useUserContext();
 	const createTask = async (taskData) => {
 		setLoading(true);
 		try {
+			console.log("taskData: " + taskData);
 			const res = await fetch(`${BACKEND_URL}/tasks/add`, {
 				method: "POST",
 				headers: { "Content-Type": "Application/json" },
-				body: JSON.stringify({ ...taskData, assignedTo: user._id }),
+				body: JSON.stringify(taskData),
 				credentials: "include",
 			});
 			const data = await res.json();
 			if (!res.ok) {
-				throw new Error(data.error || "Something went wrong");
+				throw new Error(data.message || "Something went wrong");
 			} else {
 				setUserTasks((prevTasks) => [...prevTasks, data] || data);
 				toast.success("Task added ");

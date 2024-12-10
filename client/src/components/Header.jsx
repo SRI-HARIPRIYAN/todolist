@@ -7,7 +7,8 @@ const Header = ({ setIsOpen }) => {
 	const { user } = useUserContext();
 	const [showLogout, setShowLogout] = useState(false);
 	const { logout, loading } = useLogoutHook();
-	const handleLogout = async () => {
+	const handleLogout = async (e) => {
+		e.preventDefault();
 		await logout();
 	};
 	if (loading) {

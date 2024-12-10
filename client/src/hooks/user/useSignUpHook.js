@@ -1,10 +1,12 @@
 import { useState } from "react";
 import { BACKEND_URL } from "../../constant.js";
 import { useUserContext } from "../../context.jsx";
+import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 const useSignUpHook = () => {
 	const [loading, setLoading] = useState(false);
 	const { setUser } = useUserContext();
+	const navigate = useNavigate();
 	const signUp = async (userName, email, password) => {
 		if (!userName || !email || !password) {
 			toast.error("Please fill all the fields");
