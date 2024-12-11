@@ -10,6 +10,7 @@ const AddNewTask = ({ setAddNewTask }) => {
 	const handleAddTask = async (e) => {
 		e.preventDefault();
 		await createTask({ title, description, dueDate, assignTo });
+		setAddNewTask(false);
 	};
 	return (
 		<div className="absolute top-0 left-0 w-screen h-screen   backdrop-blur-sm z-20 grid place-content-center">

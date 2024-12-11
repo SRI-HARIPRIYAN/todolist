@@ -24,7 +24,7 @@ const TaskSummary = () => {
 		);
 	}, [userTasks]);
 	return (
-		<div className="flex flex-col gap-3 ">
+		<div className="flex flex-col gap-3 p-2 ">
 			<h2 className="bg-white p-2 ">Task Dashboard</h2>
 			<ul className="flex flex-col sm:flex-row gap-3 ">
 				<li className=" bg-white h-14 flex items-center w-3/4 sm:w-[150px] text-sm font-semibold p-2 rounded-lg">

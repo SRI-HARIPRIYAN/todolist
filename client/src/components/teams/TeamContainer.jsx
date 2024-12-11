@@ -12,6 +12,7 @@ import useGetTeamInfoHook from "../../hooks/team/useGetTeamInfoHook";
 import Spinner from "../Spinner";
 import { useUserContext } from "../../context";
 import useRemoveMemberHook from "../../hooks/team/useRemoveMemberHook";
+import { toast } from "react-toastify";
 const TeamContainer = () => {
 	const [selectedOption, setSelectedOption] = useState("allTasks");
 	const [addNewMember, setAddNewMember] = useState(false);
@@ -32,6 +33,7 @@ const TeamContainer = () => {
 	if (loading) {
 		return <Spinner />;
 	}
+
 	return (
 		<div className="flex flex-col flex-1 p-2 gap-2 bg-sky-50">
 			<Link

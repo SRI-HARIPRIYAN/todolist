@@ -26,10 +26,10 @@ const AllTasks = () => {
 		return <Spinner />;
 	}
 	return (
-		<div className="p-2 flex flex-col gap-2 bg-sky-100 w-screen">
+		<div className="p-2 flex flex-col gap-2 bg-sky-100 ">
 			<h2 className="bg-white p-2 font-bold my-2">Personal tasks</h2>
-			<div className="w-full overflow-x-scroll">
-				<table className="border-2  bg-white text-center">
+			<div className=" overflow-x-scroll">
+				<table className="border-2 w-full bg-white text-center">
 					<thead>
 						<tr className=" py-2 opacity-75 ">
 							<th className="w-1/5">Title</th>

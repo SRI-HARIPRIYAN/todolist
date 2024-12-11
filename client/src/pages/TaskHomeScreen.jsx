@@ -13,9 +13,9 @@ const TaskHomeScreen = () => {
 	if (loading) return <Spinner />;
 	return (
 		<div className="w-screen h-screen relative bg-sky-100 ">
-			<div className=" flex">
+			<div className=" w-screen flex">
 				<Navbar isOpen={isOpen} setIsOpen={setIsOpen} />
-				<section className=" flex-grow">
+				<section className="md:w-[70%] flex-grow">
 					<Header setIsOpen={setIsOpen} />
 					<Outlet />
 				</section>

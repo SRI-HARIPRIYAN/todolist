@@ -30,18 +30,22 @@ const TeamNavbar = ({ isAsideClicked, setIsAsideClicked }) => {
 			</h2>
 
 			<ul className="flex flex-col  font-semibold text-center">
-				{userTeams?.map((team, i) => (
-					<li
-						onClick={() => {
-							setSelectedTeam(team);
-							setIsAsideClicked(false);
-						}}
-						className="bg-slate-100 p-2 border-b-2 cursor-pointer opacity-65"
-						key={i}
-					>
-						{team.teamName}
-					</li>
-				))}
+				{userTeams?.length !== 0 ? (
+					userTeams?.map((team, i) => (
+						<li
+							onClick={() => {
+								setSelectedTeam(team);
+								setIsAsideClicked(false);
+							}}
+							className="bg-slate-100 p-2 border-b-2 cursor-pointer opacity-65"
+							key={i}
+						>
+							{team.teamName}
+						</li>
+					))
+				) : (
+					<p>Create team to collaborate</p>
+				)}
 			</ul>
 			<button
 				onClick={() => setCreateTeam((prev) => !prev)}

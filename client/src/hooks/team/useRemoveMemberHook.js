@@ -3,9 +3,11 @@ import { BACKEND_URL } from "../../constant.js";
 import { toast } from "react-toastify";
 import useGetTeamInfoHook from "./useGetTeamInfoHook.js";
 import { useUserContext } from "../../context.jsx";
+import useGetTeamTasksHook from "../task/useGetTeamTasksHook.js";
 const useRemoveMemberHook = () => {
 	const [loading, setLoading] = useState(false);
 	const { getTeam } = useGetTeamInfoHook();
+	const { getTeamTasks } = useGetTeamTasksHook();
 	const { selectedTeam, setSelectedTeam } = useUserContext();
 	const removeMember = async (memberId) => {
 		setLoading(true);
@@ -25,6 +27,8 @@ const useRemoveMemberHook = () => {
 				throw new Error(data.error || "Unable to remove member");
 			} else {
 				setSelectedTeam(data);
+				getTeam();
+				getTeamTasks(selectedTeam?._id);
 				toast.success("User removed");
 			}
 		} catch (error) {

@@ -2,11 +2,14 @@ import { useState } from "react";
 import { useUserContext } from "../../context.jsx";
 import { BACKEND_URL } from "../../constant.js";
 import { toast } from "react-toastify";
-
+import useGetTeamInfoHook from "../team/useGetTeamInfoHook.js";
+import useGetTeamTasksHook from "./useGetTeamTasksHook.js";
 const useCreateTaskHook = () => {
 	const [error, setError] = useState(null);
 	const [loading, setLoading] = useState(false);
-	const { setUserTasks } = useUserContext();
+	const { getTeamTasks } = useGetTeamTasksHook();
+	const { getTeam } = useGetTeamInfoHook();
+	const { setUserTasks, selectedTeam } = useUserContext();
 	const createTask = async (taskData) => {
 		setLoading(true);
 		try {
@@ -23,6 +26,8 @@ const useCreateTaskHook = () => {
 			} else {
 				setUserTasks((prevTasks) => [...prevTasks, data] || data);
 				toast.success("Task added ");
+				getTeamTasks(selectedTeam?._id);
+				getTeam();
 			}
 		} catch (error) {
 			console.log("Error in createTask:", error);

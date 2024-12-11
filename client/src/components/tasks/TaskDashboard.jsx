@@ -7,14 +7,14 @@ import NewTask from "./NewTask.jsx";
 const TaskDashboard = () => {
 	const [openTask, setOpenTask] = useState(false);
 	return (
-		<div className="relative p-2 ">
+		<div className=" ">
 			<h1 className="font-bold p-2">
 				Task Management
 				<span className="opacity-25 text-sm">dashboard</span>
 			</h1>
 			<button
 				onClick={() => setOpenTask((prev) => !prev)}
-				className="bg-sky-300 h-fit mb-3 px-3 py-1 rounded-sm text-white font-bold text-sm"
+				className="bg-sky-300 h-fit mb-3 ml-2 px-3 py-1 rounded-sm text-white font-bold text-sm"
 			>
 				<MdElectricBolt className="text-white inline-block mr-1.5" />
 				New Task

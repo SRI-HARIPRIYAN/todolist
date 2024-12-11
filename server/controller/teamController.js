@@ -1,5 +1,6 @@
 import Team from "../model/teamModel.js";
 import User from "../model/userModel.js";
+import Task from "../model/taskModel.js";
 const createTeam = async (req, res) => {
 	try {
 		const { teamName } = req.body;
@@ -82,7 +83,10 @@ const removeMember = async (req, res) => {
 		const { id: teamId } = req.params;
 		const team = await Team.findById(teamId);
 		const user = await User.findById(memberId);
-
+		const tasks = await Task.DeleteMany({
+			assignedTo: memberId,
+			createdBy: user._id,
+		});
 		if (!team) {
 			return res.status(404).json({ message: "Team not found!" });
 		}

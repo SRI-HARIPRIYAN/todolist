@@ -3,19 +3,36 @@ import { TiTick } from "react-icons/ti";
 import { useUserContext } from "../../context";
 import useGetTeamTasksHook from "../../hooks/task/useGetTeamTasksHook";
 import formatDueDate from "../../utils/formatDueDate";
+
 const TeamTaskTable = ({ selectedOption }) => {
 	const [teamTasks, setTeamTasks] = useState([]);
 	const { selectedTeam } = useUserContext();
 	const { getTeamTasks } = useGetTeamTasksHook();
+
 	useEffect(() => {
 		async function getAllTasks() {
 			const tasks = await getTeamTasks(selectedTeam?._id);
-			setTeamTasks(tasks);
+			if (selectedOption === "completed") {
+				setTeamTasks(
+					tasks?.filter((task) => task.status === "completed")
+				);
+			} else if (selectedOption === "inProgress") {
+				setTeamTasks(
+					tasks?.filter((task) => task.status === "inProgress")
+				);
+			} else if (selectedOption === "pending") {
+				setTeamTasks(
+					tasks?.filter((task) => task.status === "pending")
+				);
+			} else {
+				setTeamTasks(tasks);
+			}
 		}
-		if (selectedTeam?._id) {
+
+		if (selectedTeam?._id && selectedTeam.members.length !== 0) {
 			getAllTasks();
 		}
-	}, []);
+	}, [selectedTeam, selectedOption]);
 
 	return (
 		<div className="bg-white pt-6 md:w-2/3 overflow-x-scroll">
@@ -40,7 +57,13 @@ const TeamTaskTable = ({ selectedOption }) => {
 							<td>{task.title}</td>
 							<td>{task.description}</td>
 							<td>{task.assignedTo.userName}</td>
-							<td>
+							<td
+								className={` ${
+									task.status === "pending"
+										? "text-red-300"
+										: "text-blue-300"
+								}`}
+							>
 								{selectedOption === "allTasks"
 									? task.status
 									: formatDueDate(task.dueDate)}

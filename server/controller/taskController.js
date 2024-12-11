@@ -86,7 +86,9 @@ const getTeamTasks = async (req, res) => {
 		const teamMembers = team.members;
 
 		if (teamMembers.length === 0) {
-			return res.status(400).json({ message: "No team members found" });
+			return res
+				.status(400)
+				.json({ message: "Add members to assign tasks" });
 		}
 		const memberTasks = await Task.find({
 			createdBy: userId,

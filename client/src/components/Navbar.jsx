@@ -8,9 +8,9 @@ import { TbReport } from "react-icons/tb";
 const Navbar = ({ isOpen, setIsOpen }) => {
 	return (
 		<section
-			className={` absolute md:relative ${
-				isOpen ? "left-0" : "left-[-1000px]"
-			} md:left-0 duration-300 ease-in-out top-0  w-[40%] h-screen md:w-1/6 z-10 bg-white text-sm overflow-y-clip `}
+			className={`absolute md:relative ${
+				isOpen ? "left-0 absolute" : "left-[-1000px]"
+			} md:left-0 duration-300 ease-in-out top-0  md:min-w-[12%] h-screen overflow-y-clip  z-10 bg-white text-sm `}
 		>
 			<button
 				className="w-full text-center h-10 bg-sky-500 md:hidden"

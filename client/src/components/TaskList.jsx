@@ -4,7 +4,7 @@ import TaskTable from "./TaskTable";
 const TaskList = () => {
 	const [selectedOption, setSelectedOption] = useState("allTasks");
 	return (
-		<div className="p-2 sm:p-5  bg-sky-100">
+		<div className=" py-2 sm:p-5 ">
 			<h2 className="bg-white p-2 ">Task Dashboard</h2>
 			<nav className="flex justify-start  overflow-x-clip text-xs sm:text-sm  bg-slate-100 mt-4 ">
 				<button
